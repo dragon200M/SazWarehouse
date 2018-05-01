@@ -1,0 +1,37 @@
+<div class="form">
+  <h3>Dodaj nowy komponent</h3>
+  <form [formGroup]="komponentForm">
+    <p>
+      <label for="">Nazwa</label>
+      <input type="text" formControlName="name">
+    </p>
+    <p>
+      <label for="">Opis</label>
+      <input type="text" formControlName="desc">
+    </p>
+    <p>
+      <label for="">Waga</label>
+      <input type="number" formControlName="weight">
+    </p>
+    <p>
+      <label for="">Jednostki</label>
+      <select formControlName = "units">
+        <option *ngFor="let e of units(); let i = index" value={{e}}>{{e}}</option>
+      </select>
+    </p>
+    <select formControlName="type_1">
+      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
+    </select>
+    <select formControlName="type_2">
+      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
+    </select>
+    <select formControlName="type_3">
+      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
+    </select>
+  </form>
+</div>
+<button (click)="onNewKomponent()">Dodaj</button>
+
+
+
+

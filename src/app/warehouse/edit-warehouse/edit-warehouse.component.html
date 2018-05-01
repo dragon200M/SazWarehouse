@@ -1,0 +1,26 @@
+<div class="form">
+  <h3>Dodaj nowy magazyn</h3>
+  <form [formGroup]="warehouseForm">
+    <p>
+      <label for="">Nazwa</label>
+      <input type="text" formControlName="name">
+    </p>
+    <p>
+      <label for="">Nazwa Wyswietlana</label>
+      <input type="text" formControlName="visible_name">
+    </p>
+    <p>
+      <label for="">Opis</label>
+      <input type="text" formControlName="description">
+    </p>
+    <p>
+      <label for="">Dostepny</label>
+      <select formControlName="available">
+        <option [value]="true">Tak</option>
+        <option [value]="false">Nie</option>
+      </select>
+    </p>
+
+  </form>
+</div>
+<button (click)="onNewWarehouse()">Dodaj</button>

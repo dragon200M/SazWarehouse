@@ -1,0 +1,10 @@
+<ul class="list-unstyled">
+  <li><strong>ID:</strong>  {{(komponentState | async).komponents[id].id}}</li>
+  <li><strong>Nazwa:</strong> {{(komponentState | async).komponents[id]._name}}</li>
+  <li><strong>Opis:</strong>  {{(komponentState | async).komponents[id]._description}}</li>
+  <li><strong>Typ 1:</strong> {{(komponentState | async).komponents[id]._typ_1.toString()}}</li>
+  <li><strong>Typ 2:</strong> {{(komponentState | async).komponents[id]._typ_2.toString()}}</li>
+  <li><strong>Typ 3:</strong> {{(komponentState | async).komponents[id]._typ_3.toString()}}</li>
+  <li><strong>Waga:</strong>  {{(komponentState | async).komponents[id]._weight}}</li>
+  <li><strong>J.M:</strong> {{(komponentState | async).komponents[id]._units}}</li>
+</ul>

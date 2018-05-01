@@ -1,0 +1,22 @@
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <strong class="card-title">Komponenty</strong>
+    </div>
+    <button (click)="onNewKomponent()">Nowy komponent</button>
+    <div class="card-body">
+      <app-list-component></app-list-component>
+    </div>
+  </div>
+</div>
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <strong class="card-title">Szczegóły</strong>
+    </div>
+    <div class="card-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

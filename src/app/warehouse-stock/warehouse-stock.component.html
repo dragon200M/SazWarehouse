@@ -1,0 +1,15 @@
+<div *ngIf = "urlcheck">
+  <div class="col-md-6">
+  <app-edit-stock
+  [name] = "getWarehouseName()"
+  ></app-edit-stock>
+  </div>
+</div>
+<div [ngClass]="urlcheck ? 'col-md-6' : 'col-md-12'">
+  <div class="card">
+      <app-stock-list
+      [stockItems]="getStocks()"
+      [warehouse]="getwarehouse()"
+      ></app-stock-list>
+  </div>
+</div>

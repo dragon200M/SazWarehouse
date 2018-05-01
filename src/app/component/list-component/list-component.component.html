@@ -1,0 +1,21 @@
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Nazwa</th>
+    <th>Opis</th>
+    <th>Typ 1</th>
+    <th>Typ 2</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let k of (komponentState | async).komponents; let i = index" (click)="setClickedRow(i)" [ngClass]="{active: i == selectedRow}">
+       <th [routerLink]="[i]">{{k.id}}</th>
+       <th [routerLink]="[i]">{{k.name}}</th>
+       <th [routerLink]="[i]">{{k.description}}</th>
+       <th [routerLink]="[i]">{{k._typ_1.toString()}}</th>
+       <th [routerLink]="[i]">{{k._typ_2.toString()}}</th>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,22 @@
+<div class="card-header">
+  <strong class="card-title">{{warehouse.visibleName}} {{warehouse.description}}</strong>
+</div>
+<div class="card-body">
+      <table id="bootstrap-data-table" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Komponent</th>
+          <th>Opis</th>
+          <th>Stan</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let s of stockItems; let i = index" (click)="setClickedRow(i,s)" [ngClass]="{active: i == selectedRow}">
+          <td>{{s.komponent.name}}</td>
+          <td>{{s.komponent.description}}</td>
+          <td>{{s.stock}}</td>
+        </tr>
+        </tbody>
+      </table>
+</div>
+

@@ -1,0 +1,45 @@
+<div class="col-lg-6">
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">Komponenty</strong>
+  </div>
+
+  <div class="card-body">
+<table>
+  <thead>
+  <th>Nazwa</th>
+  <th>Nazwa Wyswietlana</th>
+  <th>Opis</th>
+  <th>Dostepnosc</th>
+  <th>Akcja</th>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let w of (war | async).warehouses; let i = index" >
+        <td (click)="listClick(w.name)">{{w.name}}</td>
+        <td (click)="listClick(w.name)">{{w.visibleName}}</td>
+        <td (click)="listClick(w.name)">{{w.desc}}</td>
+        <td (click)="listClick(w.name)">{{w.available}}</td>
+        <td>
+          <button (click)="onAddElementToWarehouse(w.name)">Dodaj</button>
+        </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">Szczegóły</strong>
+  </div>
+  <div class="card-body">
+<div class="col-lg-6">
+<p>{{test.id}}</p>
+<p>{{test.name}}</p>
+<p>{{test.description}}</p>
+<p>{{test.available}}</p>
+</div>
+  </div>
+</div>
+</div>

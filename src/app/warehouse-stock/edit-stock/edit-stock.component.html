@@ -1,0 +1,27 @@
+<div class="form">
+  <h2>{{name}} {{warehousedesc}}</h2>
+  <h3>Dodaj element do magazynu</h3>
+  <form [formGroup]="stockForm">
+    <div>
+      <label for="">Komponent</label>
+      <select formControlName="komponentName" (ngModelChange)="selectedItem($event)">
+        <option
+          *ngFor="let k of (komponentState | async).komponents; let i = index"
+          [value]="i">
+          {{k.name}}
+        </option>
+      </select>
+      <div>
+        <p>Opis</p>
+        {{selectedKomponentDesc}}
+        {{selectedKomponentType}}
+     </div>
+
+    </div>
+    <p>
+      <label for="">Ilość</label>
+      <input type="number" formControlName="stock">
+    </p>
+  </form>
+</div>
+<button (click) = "addStockToWarehouse()">Dodaj</button>
