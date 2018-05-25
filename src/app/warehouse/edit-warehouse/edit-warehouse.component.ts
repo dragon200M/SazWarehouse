@@ -7,6 +7,7 @@ import * as fromWarehouse from '../store/warehouse.reducers';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {Store} from '@ngrx/store';
 })
 export class EditWarehouseComponent implements OnInit {
   warehouseForm: FormGroup;
-
+  checkname = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,11 +37,15 @@ export class EditWarehouseComponent implements OnInit {
    const tmp = new WarehouseModel('1234', w['name'],
       w['description'], zm);
     //nazwa wyswietlana wieksza od 3 znakow, biale znaki pomija
-    if ( (w['visible_name'].replace(/\s/g, "")).length > 3 ) {
+    if ( (w['visible_name'].replace(/\s/g, '')).length > 3 ) {
       tmp.visibleName = w['visible_name'];
     }
 
-   this.store.dispatch(new WarehouseActions.AddWarehouse(tmp));
+   // this.store.dispatch(new WarehouseActions.AddWarehouse(tmp));
+   this.store.dispatch(new WarehouseActions.StoreWarehouses(tmp));
+    this.store.select('warehouseList').subscribe((data) => {
+      this.checkname = data.errors;
+    });
   }
 
   private initForm() {

@@ -3,6 +3,7 @@ import {StockModel} from '../stock.model';
 import {WarehouseModel} from '../../warehouse/warehouse.model';
 import {Komponent} from '../../component/komponent.model';
 import {Types} from '../../enums/types.enum';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-stock-list',

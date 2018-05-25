@@ -1,17 +1,27 @@
 <div class="form">
   <h3>Dodaj nowy komponent</h3>
+
   <form [formGroup]="komponentForm">
     <p>
       <label for="">Nazwa</label>
-      <input type="text" formControlName="name">
+      <input type="text" formControlName="name" [attr.disabled]="editable ? 'disabled' : null">
     </p>
     <p>
       <label for="">Opis</label>
       <input type="text" formControlName="desc">
     </p>
     <p>
+      <label for="">Materiał</label>
+      <input type="text" formControlName="material">
+      <span *ngIf="komponentForm.controls['material'].valid">Poprawne</span>
+    </p>
+    <p>
       <label for="">Waga</label>
       <input type="number" formControlName="weight">
+    </p>
+    <p>
+      <label for="">Kolejność</label>
+      <input type="number" formControlName="order">
     </p>
     <p>
       <label for="">Jednostki</label>
@@ -28,10 +38,27 @@
     <select formControlName="type_3">
       <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
     </select>
+    <select formControlName="childs">
+      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
+    </select>
+    <p>
+      <label for="">Wymiar X</label>
+      <input type="number" formControlName="dimensionX">
+    </p>
+    <p>
+      <label for="">Wymiar Y</label>
+      <input type="number" formControlName="dimensionY">
+    </p>
+    <p>
+      <label for="">Wymiar Z</label>
+      <input type="number" formControlName="dimensionZ">
+    </p>
+    <!--<select formControlName="type_3">-->
+      <!--<option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>-->
+    <!--</select>-->
   </form>
 </div>
-<button (click)="onNewKomponent()">Dodaj</button>
-
+<button (click)="onNewKomponent()">{{editable ? 'Zapisz zmiany':'Dodaj'}}</button>
 
 
 

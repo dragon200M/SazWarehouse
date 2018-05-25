@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import url(~angular-tree-component/dist/angular-tree-component.css);
 app-warehouse-stock {
   width: 100%; }
 
@@ -7,5 +8,19 @@ app-warehouse {
 
 app-komponent {
   width: 100%; }
+
+app-detail {
+  width: 100%;
+  min-height: 600px; }
+
+app-operation {
+  width: 100%; }
+
+app-summary {
+  width: 100%; }
+
+ul > p {
+  margin-bottom: 0px;
+  font-size: 14px; }
 
 /*# sourceMappingURL=styles.css.map */

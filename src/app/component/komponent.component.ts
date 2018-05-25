@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-komponent',
@@ -8,15 +9,23 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class KomponentComponent implements OnInit {
 
+
+
   constructor(private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+
   }
+
+
 
   onNewKomponent() {
     this.router.navigate(['new'],
       {relativeTo: this.route});
   }
 
+  public onRowSelected(index: number) {
+    console.log(index);
+  }
 }

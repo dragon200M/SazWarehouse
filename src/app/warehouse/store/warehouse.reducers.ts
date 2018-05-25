@@ -9,12 +9,14 @@ export interface FeatureState extends fromApp.AppState {
 }
 
 export interface State {
-  warehouses: WarehouseModel[];
+  warehouses: WarehouseModel[],
+  errors: boolean;
 }
 
 
 const initialState: State = {
-  warehouses: []
+  warehouses: [],
+  errors: false
 };
 
 export function warehouseReducer(state = initialState, action: WarehouseActions.WarehouseActions) {
@@ -22,19 +24,27 @@ export function warehouseReducer(state = initialState, action: WarehouseActions.
     case (WarehouseActions.SET_WAREHOUSE):
       return {
         ...state,
-        warehouses: [...action.payload]
+        warehouses: [...action.payload],
+        errors: false
       };
     case (WarehouseActions.GET_WAREHOUSE):
       const warehouse = state.warehouses.filter(
         w => w.name === action.payload);
       return {
         ...state,
-        warehouses: warehouse
+        warehouses: warehouse,
+        errors: false
       };
     case (WarehouseActions.ADD_WAREHOUSE):
       return {
         ...state,
-        warehouses: [...state.warehouses, action.payload]
+        warehouses: [...state.warehouses, action.payload],
+        errors: false
+      };
+    case (WarehouseActions.ERROR):
+      return {
+        ...state,
+        errors: true
       };
     default:
       return state;

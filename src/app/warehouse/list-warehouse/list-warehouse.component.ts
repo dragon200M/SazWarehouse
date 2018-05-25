@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from 'rxjs/Subject';
 import {WarehouseModel} from '../warehouse.model';
@@ -8,7 +8,7 @@ import {WarehouseModel} from '../warehouse.model';
   templateUrl: './list-warehouse.component.html',
   styleUrls: ['./list-warehouse.component.scss']
 })
-export class ListWarehouseComponent implements OnInit {
+export class ListWarehouseComponent implements OnInit,OnDestroy {
   @Input() war;
   test = new Subject<WarehouseModel>();
   constructor(private router: Router,
@@ -29,6 +29,9 @@ export class ListWarehouseComponent implements OnInit {
     this.listClick(s);
     this.router.navigate([s + '/addStock'],
       {relativeTo: this.route});
+  }
+  ngOnDestroy() {
+
   }
 
 }

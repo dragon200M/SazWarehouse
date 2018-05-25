@@ -6,7 +6,12 @@
     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class="menu icon fa fa-beer"></i>  Magazyny</a>
     <ul class="sub-menu children dropdown-menu">
+      <p>Widoczne</p>
       <li *ngFor="let w of visibleWarehouses; let i = index"
+          (click)="goToSelectedWareHouse(w.name)"><i class="fa fa-puzzle-piece">
+      </i><a>{{w.visibleName}}</a></li>
+      <p>Nie widoczne</p>
+      <li *ngFor="let w of unvisibleWarehouses; let i = index"
           (click)="goToSelectedWareHouse(w.name)"><i class="fa fa-puzzle-piece">
       </i><a>{{w.visibleName}}</a></li>
     </ul>
@@ -15,5 +20,14 @@
     <a routerLink="/komponenty"> <i class="menu-icon fa fa-dashboard"></i>Komponenty</a>
   </li>
   <li class="active">
-    <a routerLink="/magazyny"><i class="menu-icon fa fa-dashboard"></i>Magazyny</a>
+    <a routerLink="/receptury"><i class="menu-icon fa fa-dashboard"></i>Receptury</a>
   </li>
+  <li class="menu-item-has-children dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Components</a>
+    <ul class="sub-menu children dropdown-menu">
+      <li><i class="menu-icon fa fa-dashboard"></i><a routerLink="/magazyny">Magazyny</a></li>
+      <li><i class="menu-icon fa fa-dashboard"></i><a routerLink="/counts">Obliczenia</a></li>
+      <li><i class="menu-icon fa fa-dashboard"></i><a routerLink="/sztuki">Sztuki</a></li>
+    </ul>
+  </li>
+

@@ -16,9 +16,7 @@ export interface State2 {
 }
 
 const initialState: State = {
-  komponents: [new Komponent('1', 'abc1', 'aa', Types.sztuka, Types.pusty, ''),
-    new Komponent('2', 'abc2', 'aa', Types.sztuka, Types.pusty, ''),
-    new Komponent('2', 'abc22', 'aa', Types.sztuka, Types.pusty, '')],
+  komponents: [],
 };
 
 export function komponentReducer(state = initialState, action: KomponentActions.KomponentActions) {

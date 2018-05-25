@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {WarehouseModel} from './warehouse.model';
 import { Store } from '@ngrx/store';
@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './warehouse.component.html',
   styleUrls: ['./warehouse.component.scss']
 })
-export class WarehouseComponent implements OnInit {
+export class WarehouseComponent implements OnInit, OnDestroy {
   warehouseList: Observable<{warehouses: WarehouseModel[]}>;
   urlcheck: boolean;
 
@@ -31,4 +31,7 @@ export class WarehouseComponent implements OnInit {
       {relativeTo: this.route});
   }
 
+  ngOnDestroy() {
+
+  }
 }

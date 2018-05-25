@@ -9,6 +9,7 @@ export const DELETE_WAREHOUSE = 'DELETE_WAREHOUSE';
 export const STORE_WAREHOUSE = 'STORE_WAREHOUSE';
 export const FETCH_WAREHOUSE = 'FETCH_WAREHOUSE';
 export const GET_WAREHOUSE = 'GET_WAREHOUSE';
+export const ERROR = 'ERROR';
 
 export class SetWarehouse implements Action {
   readonly  type = SET_WAREHOUSE;
@@ -28,6 +29,15 @@ export class GetWarehouse implements Action {
 export class FetchWarehouses implements Action {
   readonly type = FETCH_WAREHOUSE;
 }
+export class StoreWarehouses implements Action {
+  readonly type = STORE_WAREHOUSE;
+  constructor(public payload: WarehouseModel) {}
+}
+export class ErrorWarehouses implements Action {
+  readonly type = ERROR;
+  constructor(public payload: boolean) {}
+}
 
-export type WarehouseActions = SetWarehouse|AddWarehouse|GetWarehouse|FetchWarehouses;
+export type WarehouseActions = SetWarehouse
+  |AddWarehouse|GetWarehouse|FetchWarehouses|StoreWarehouses|ErrorWarehouses;
 

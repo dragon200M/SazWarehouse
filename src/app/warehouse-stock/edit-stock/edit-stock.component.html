@@ -8,7 +8,7 @@
         <option
           *ngFor="let k of (komponentState | async).komponents; let i = index"
           [value]="i">
-          {{k.name}}
+          {{k._name}}
         </option>
       </select>
       <div>

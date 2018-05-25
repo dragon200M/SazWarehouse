@@ -1,5 +1,8 @@
 <div class="form">
   <h3>Dodaj nowy magazyn</h3>
+  <div *ngIf="checkname" class="alert alert-danger">
+    <strong>Nazwa jest zajęta</strong>
+  </div>
   <form [formGroup]="warehouseForm">
     <p>
       <label for="">Nazwa</label>

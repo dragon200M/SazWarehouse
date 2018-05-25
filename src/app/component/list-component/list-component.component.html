@@ -1,21 +1,28 @@
 
-<table class="table">
+<table id="bootstrap-data-table" class="table table-striped table-bordered
+table-hover dt-body-left">
   <thead>
   <tr>
     <th>Id</th>
     <th>Nazwa</th>
     <th>Opis</th>
+    <th>Material</th>
     <th>Typ 1</th>
-    <th>Typ 2</th>
+    <th>Waga</th>
+    <th>J.M</th>
   </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let k of (komponentState | async).komponents; let i = index" (click)="setClickedRow(i)" [ngClass]="{active: i == selectedRow}">
-       <th [routerLink]="[i]">{{k.id}}</th>
-       <th [routerLink]="[i]">{{k.name}}</th>
-       <th [routerLink]="[i]">{{k.description}}</th>
-       <th [routerLink]="[i]">{{k._typ_1.toString()}}</th>
-       <th [routerLink]="[i]">{{k._typ_2.toString()}}</th>
+  <tbody #tab>
+    <tr *ngFor="let k of (komponentState | async).komponents; let i = index"
+        (click)="selectRow(i, k)"
+        [routerLink] = "['edit',k?._name]">
+       <td>{{i}}</td>
+       <td>{{k?._name}}</td>
+       <td>{{k?._description}}</td>
+       <td>{{k?._material}}</td>
+       <td>{{k?._typ_1.toString()}}</td>
+       <td>{{k?._weight}}</td>
+       <td>{{k?._units}}</td>
     </tr>
   </tbody>
 </table>

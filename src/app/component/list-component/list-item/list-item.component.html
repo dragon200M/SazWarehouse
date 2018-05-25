@@ -1,6 +1,8 @@
 <div [routerLink]="[index]">
-  <td>{{komponent.id}}</td>
-  <td>{{komponent.name}}</td>
-  <td>{{komponent.typ_1}}</td>
+  <td>{{komponent._id}}</td>
+  <td>{{komponent._name}}</td>
+  <td>{{komponent._typ_1}}</td>
+  <td><a  class="btn btn-primary"
+          routerLink="edit/{{komponent._name}}" role="button">EDYCJA</a></td>
 </div>
 

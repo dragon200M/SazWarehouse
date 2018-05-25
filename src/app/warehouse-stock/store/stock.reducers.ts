@@ -37,17 +37,19 @@ export function stockReducer(state = initialState, action: StockActions.StockAct
       const tmp = state.warehouseStock;
       const pay = action.payload;
       const s = tmp.filter(f => f.warehouse.name === pay.warehouse.name
-        && f.komponent.name === pay.komponent.name );
+        && f.component._name === pay.component._name );
       let a1: StockModel[];
       if (s.length > 0) {
+
        const i = tmp.findIndex(b => b.warehouse.name === s[0].warehouse.name &&
-        b.komponent.name === s[0].komponent.name);
-       s[0].stock += action.payload.stock;
+         b.component._name === s[0].component._name);
+       s[0]._stock += action.payload._stock;
        tmp[i] = s[0];
        a1 = tmp;
 
       } else {
         a1 = [...tmp, pay];
+
       }
       return {
         ...state,
@@ -93,29 +95,29 @@ export function stockReducer(state = initialState, action: StockActions.StockAct
       let tmp1 = {material: '', magazyn: '', ilosc: 0};
       let tmp2 = [];
       if(warStock1.length > 0) {
-        for (let s of warStock1) {
-          const k1 = s.komponent.name;
-          const w1 = s.warehouse.name;
-          const st = s.stock;
-          tmp1.material = k1;
-          tmp1.magazyn = w1;
-          tmp1.ilosc = st;
-
-          const szukane = tmp2.filter(s1 => s1.material
-            === tmp1.material &&
-            s1.magazyn === tmp1.magazyn);
-
-          if (szukane.length > 0) {
-            const ind3 = tmp2.findIndex(s1 => s1.material
-              === tmp1.material &&
-              s1.magazyn === tmp1.magazyn);
-            tmp2[ind3].ilosc += tmp1.ilosc;
-          } else {
-            tmp2.push(tmp1);
-
-          }
-
-        }
+        // for (let s of warStock1) {
+        //   const k1 = s.komponent.name;
+        //   const w1 = s.warehouse.name;
+        //   const st = s.stock;
+        //   tmp1.material = k1;
+        //   tmp1.magazyn = w1;
+        //   tmp1.ilosc = st;
+        //
+        //   const szukane = tmp2.filter(s1 => s1.material
+        //     === tmp1.material &&
+        //     s1.magazyn === tmp1.magazyn);
+        //
+        //   if (szukane.length > 0) {
+        //     const ind3 = tmp2.findIndex(s1 => s1.material
+        //       === tmp1.material &&
+        //       s1.magazyn === tmp1.magazyn);
+        //     tmp2[ind3].ilosc += tmp1.ilosc;
+        //   } else {
+        //     tmp2.push(tmp1);
+        //
+        //   }
+        //
+        // }
 
       }
       console.log(state.komponentsSumUp);

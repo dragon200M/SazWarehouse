@@ -12,7 +12,12 @@ export class WarehouseModel {
     this.name = name;
     this.description = description;
     this.available = available;
-    this.visibleName = this.name;
   }
 
+}
+export interface Warehouses {
+  _name: string;
+  _description: string;
+  _visibleName: string;
+  _available: boolean;
 }

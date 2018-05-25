@@ -2,4 +2,9 @@
   background-color: #123456;
   color: white; }
 
+tr > td, th {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 14px; }
+
 /*# sourceMappingURL=list-component.component.css.map */

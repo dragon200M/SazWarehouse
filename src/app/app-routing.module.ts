@@ -15,11 +15,16 @@ import {EditWarehouseComponent} from './warehouse/edit-warehouse/edit-warehouse.
 import {RecipeComponent} from './recipe/recipe.component';
 import {EditRecipeComponent} from './recipe/edit-recipe/edit-recipe.component';
 import {ListRecipeComponent} from './recipe/list-recipe/list-recipe.component';
+import {DetailComponent} from './recipe/detail-recipe/detail.component';
+import {OperationComponent} from './warehouse-stock/operation-stock/operation.component';
+import {SummaryComponent} from './warehouse-stock/operation-stock/summary.component';
 
 
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
+  {path: 'receptury', component: DetailComponent,
+  children: [{path: 'edit/:id', component: EditComponentComponent}]},
   {path: 'second', component: RecipeComponent,
     children: [
       {path: 'firstchildcomp', component: EditRecipeComponent, outlet: 'firstchild'},
@@ -28,13 +33,17 @@ const appRoutes: Routes = [
   {path: 'komponenty', component: KomponentComponent,
     children: [
       {path: 'new', component: EditComponentComponent},
-      {path: ':id', component: DetailComponentComponent}
+      {path: ':id', component: DetailComponentComponent},
+      {path: 'edit/:id', component: EditComponentComponent}
       ]},
+
   {path: 'magazyny', component: WarehouseComponent,
    children: [
      {path: 'new', component: EditWarehouseComponent },
      {path: ':id/addStock', component: WarehouseStockComponent}
    ]},
+  {path: 'sztuki', component: OperationComponent},
+  {path: 'counts', component: SummaryComponent},
   {path: ':id', component: WarehouseStockComponent }
 
 ];

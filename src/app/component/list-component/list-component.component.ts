@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromKomponent from '../store/komp.reducers';
@@ -6,18 +6,29 @@ import {Komponent} from '../komponent.model';
 import * as fromApp from '../../store/app.reducers';
 import {ActivatedRoute, Router, Params} from '@angular/router';
 import * as StockAction from '../../warehouse-stock/store/stock.actions';
+import * as $ from 'jquery';
+import 'datatables.net';
+import {DataserviceService} from '../../services/dataservice.service';
+
 
 @Component({
   selector: 'app-list-component',
   templateUrl: './list-component.component.html',
   styleUrls: ['./list-component.component.scss']
 })
-export class ListComponentComponent implements OnInit {
-  // pobranie ze sklepu materialow
+export class ListComponentComponent implements OnInit, AfterViewInit {
+
+
   komponentState: Observable<{komponents: Komponent[]}>;
-  selectedRow: number;
   id: number;
-  constructor(private store: Store<fromApp.AppState>) { }
+  ktmp: Komponent;
+  public tableWidget: any;
+
+
+  constructor(private store: Store<fromApp.AppState>,
+              private route: ActivatedRoute,
+              private router: Router,
+              private ds: DataserviceService) { }
 
   ngOnInit() {
     this.komponentState = this.store.select('kompList');
@@ -28,14 +39,13 @@ export class ListComponentComponent implements OnInit {
     // )
     //TODO komponent -> podglad stanu na magazynach
     let tmp = [];
-    this.komponentState.take(1).subscribe(
-      (k: any) => {
-        tmp = k.komponents;
-      }
-    );
+    // this.komponentState.take(1).subscribe(
+    //   (k: any) => {
+    //     tmp = k.komponents;
+    //   }
+    // );
     let tmpStock = [];
     const warehouseKomponent = [];
-    this.store.dispatch(new StockAction.GetKomponentsStock());
     this.store.select('warehouseStockList').subscribe(
       (p: any) => {
         tmpStock = p.warehouseStock;
@@ -57,9 +67,23 @@ export class ListComponentComponent implements OnInit {
     }
   }
 
-  setClickedRow(i: number) {
-    this.selectedRow = i;
-    this.id = i;
+  ngAfterViewInit() {
+    this.initDatatable();
+  }
+
+  private initDatatable(): void {
+    const exampleId: any = $('#bootstrap-data-table');
+    this.tableWidget = exampleId.DataTable({
+      pagingType: 'full_numbers',
+      pageLength: 20,
+      select: true,
+      'autoWidth': true
+    });
+  }
+
+  public selectRow(index: number, row: any) {
+    this.ds.sendData(row);
+    this.ktmp = row;
   }
 
 
