@@ -7,6 +7,7 @@ export const UPDATE_KOMPONENT = 'UPDATE_KOMPONENT';
 export const DELETE_KOMPONENT = 'DELETE_KOMPONENT';
 export const STORE_KOMPONENT = 'STORE_KOMPONENT';
 export const FETCH_KOMPONENT = 'FETCH_KOMPONENT';
+export const ERROR = 'ERROR';
 
 export class SetKomponents implements Action {
   readonly type = SET_KOMPONENT;
@@ -20,7 +21,7 @@ export class AddKomponent implements Action {
 
 export class UpdateKomponent implements Action {
   readonly type = UPDATE_KOMPONENT;
-  constructor(public payload: {index: number, updatedKompo: Komponent}) {}
+  constructor(public payload: {name: string, index: number, updatedKompo: Komponent}) {}
 }
 
 export class DeleteKomponent implements Action {
@@ -30,11 +31,17 @@ export class DeleteKomponent implements Action {
 
 export class StoreKomponent implements Action {
   readonly type = STORE_KOMPONENT;
+  constructor(public payload: Komponent) {}
 }
 
 export class FetchKomponent implements Action {
   readonly type = FETCH_KOMPONENT;
 
+}
+
+export class ErrorKomponent implements Action {
+  readonly type = ERROR;
+  constructor(public payload: boolean) {}
 }
 
 export type KomponentActions =
@@ -43,6 +50,7 @@ export type KomponentActions =
   UpdateKomponent |
   DeleteKomponent |
   StoreKomponent  |
-  FetchKomponent ;
+  FetchKomponent  |
+  ErrorKomponent  ;
 
 

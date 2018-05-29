@@ -1,3 +1,9 @@
+<div *ngIf="(testPowodzenie | async)?.errors" class="alert alert-danger">
+  <strong>Błąd</strong>-coś poszło nie tak.
+</div>
+<div *ngIf="!(testPowodzenie | async)?.errors && powodzenie" class="alert alert-info">
+  Operacja powiodła się.
+</div>
 <div class="form">
   <h3>Dodaj nowy komponent</h3>
 
@@ -32,15 +38,6 @@
     <select formControlName="type_1">
       <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
     </select>
-    <select formControlName="type_2">
-      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
-    </select>
-    <select formControlName="type_3">
-      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
-    </select>
-    <select formControlName="childs">
-      <option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>
-    </select>
     <p>
       <label for="">Wymiar X</label>
       <input type="number" formControlName="dimensionX">
@@ -53,9 +50,7 @@
       <label for="">Wymiar Z</label>
       <input type="number" formControlName="dimensionZ">
     </p>
-    <!--<select formControlName="type_3">-->
-      <!--<option *ngFor="let e of keys(); let i = index" value={{e}}>{{e}}</option>-->
-    <!--</select>-->
+
   </form>
 </div>
 <button (click)="onNewKomponent()">{{editable ? 'Zapisz zmiany':'Dodaj'}}</button>

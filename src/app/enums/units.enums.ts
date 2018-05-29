@@ -1,5 +1,7 @@
 export enum Units {
-  mb = 'MB',
+  mb = 'METER',
   piece = 'PIECE',
-  surface = 'M2'
+  surface = 'SQURE',
+  rod = 'ROD',
+  kg = 'KG'
 }

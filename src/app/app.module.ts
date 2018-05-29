@@ -42,6 +42,11 @@ import { DataserviceService} from './services/dataservice.service';
 import { OperationComponent } from './warehouse-stock/operation-stock/operation.component';
 import { AppComponent } from './app.component';
 import { SummaryComponent } from './warehouse-stock/operation-stock/summary.component';
+import { OperationOnMainComponent } from './warehouse-stock/operation-stock/operation-on-main/operation-on-main.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -69,6 +74,7 @@ import { SummaryComponent } from './warehouse-stock/operation-stock/summary.comp
     DetailComponent,
     OperationComponent,
     SummaryComponent,
+    OperationOnMainComponent,
 
   ],
   imports: [
@@ -82,6 +88,9 @@ import { SummaryComponent } from './warehouse-stock/operation-stock/summary.comp
     ReactiveFormsModule,
     TreeModule,
     DataTablesModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule,
    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [ ApiService , DataserviceService],

@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,OAAO;EACL,gBAAgB,EAAC,OAAO;EACxB,KAAK,EAAE,KAAK;;AAGd,WAAU;EACR,WAAW,EAAE,GAAG;EAChB,cAAc,EAAE,GAAG;EACnB,SAAS,EAAE,IAAI",
+"mappings": "AAAA,OAAO;EACL,gBAAgB,EAAC,OAAO;EACxB,KAAK,EAAE,KAAK;;AAId,WAAU;EACR,WAAW,EAAE,GAAG;EAChB,cAAc,EAAE,GAAG;EACnB,SAAS,EAAE,IAAI;;AAGjB,OAAQ;EACN,SAAS,EAAE,IAAI;;AAGjB,mBAAoB;EAClB,SAAS,EAAE,IAAI",
 "sources": ["list-component.component.scss"],
 "names": [],
 "file": "list-component.component.css"

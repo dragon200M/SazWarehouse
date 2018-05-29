@@ -9,7 +9,7 @@ export interface FeatureState extends fromApp.AppState {
 }
 
 export interface State {
-  warehouses: WarehouseModel[],
+  warehouses: WarehouseModel[];
   errors: boolean;
 }
 

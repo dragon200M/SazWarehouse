@@ -12,6 +12,8 @@ import {async} from '@angular/core/testing';
 import {DataserviceService} from '../../services/dataservice.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Subject} from 'rxjs/Subject';
+import {ApiService} from '../../services/api.service';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-edit-component',
@@ -22,7 +24,10 @@ export class EditComponentComponent implements OnInit, OnDestroy {
   id: string;
   komponentForm: FormGroup;
   editable: boolean;
-  subscription: Subscription;
+  errors = false;
+  powodzenie = false;
+  testPowodzenie: Observable<{errors: boolean}>;
+  ind = -1;
 
   keys(): Array<string> {
     const keys = Object.keys(Types);
@@ -44,7 +49,8 @@ export class EditComponentComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private store: Store<fromKomponent.FeatureState>) { }
+              private store: Store<fromKomponent.FeatureState>,
+              private api: ApiService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -56,6 +62,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     );
 
 
+
   }
 
 
@@ -63,26 +70,43 @@ export class EditComponentComponent implements OnInit, OnDestroy {
   onNewKomponent() {
     const t = this.komponentForm.value;
     const tmpKomp = new Komponent(t['name'], t['name'], t['desc'],
-      t['type_1'], t['type_2'], t['type_3']);
+      t['type_1'],  Types.pusty, Types.pusty);
     tmpKomp._units = t['units'];
     tmpKomp._weight = t['weight'];
+    tmpKomp._dimension_X = t['dimensionX'];
+    tmpKomp._dimension_Y = t['dimensionY'];
+    tmpKomp._dimension_Z = t['dimensionZ'];
+    tmpKomp._sortorder = t['order'];
+    tmpKomp._material = t['material'];
 
     if (this.editable) {
-      this.store.select('kompList').take(1)
-        .subscribe( (kState: fromKomponent.State) => {
-          const ktmp = kState.komponents.filter(k => k._name !== this.id)[0];
-          tmpKomp.addChild(ktmp, 5);
+      this.store.select('kompList').subscribe(
+        el => {
+          const name = el.komponents.findIndex(w => w._name === tmpKomp._name);
+          this.ind = name;
         });
+
+        if ( this.ind > -1 ) {
+          this.testPowodzenie = this.store.select('kompList');
+          this.store.dispatch(new KomponentActions.UpdateKomponent({
+            index: this.ind,
+            updatedKompo: tmpKomp,
+            name: tmpKomp._name}));
+          this.powodzenie = true;
+          setTimeout(function() {
+            this.powodzenie = false;
+          }.bind(this), 3000);
+
+        }
+
+    } else {
+      this.testPowodzenie = this.store.select('kompList');
+      this.store.dispatch(new KomponentActions.StoreKomponent(tmpKomp));
+      this.powodzenie = true;
+      setTimeout(function() {
+        this.powodzenie = false;
+      }.bind(this), 3000);
     }
-
-    console.log(tmpKomp);
-
-    this.store.dispatch(new KomponentActions.AddKomponent(tmpKomp));
-
-    // this.store.select('kompList').take(1)
-    //   .subscribe( (komState: fromKomponent.State) => {
-    //     const kom = komState.komponents;
-    //   });
 
   }
 
@@ -93,8 +117,6 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     let komponentSortOrder = 0;
     let komponentUnits = '';
     let komponentType1 = '';
-    let komponentType2 = '';
-    let komponentType3 = '';
     let komponentMaterial = '';
     let kDimensionX = 0.0;
     let kDimensionY = 0.0;
@@ -110,8 +132,6 @@ export class EditComponentComponent implements OnInit, OnDestroy {
           komponentWeight = ktmp._weight;
           komponentUnits = ktmp._units;
           komponentType1 = ktmp._typ_1;
-          komponentType2 = ktmp._typ_2;
-          komponentType3 = ktmp._typ_3;
           komponentSortOrder = ktmp._sortorder;
           komponentMaterial = ktmp._material;
           kDimensionX = ktmp._dimension_X;
@@ -129,16 +149,13 @@ export class EditComponentComponent implements OnInit, OnDestroy {
       'weight': new FormControl(komponentWeight),
       'units': new FormControl(komponentUnits),
       'type_1': new FormControl(komponentType1),
-      'type_2': new FormControl(komponentType2),
-      'type_3': new FormControl(komponentType3),
       'order' : new FormControl(komponentSortOrder),
       'material' : new FormControl(komponentMaterial, Validators.compose([
         Validators.required, this.materialValidator
       ])),
       'dimensionX' : new FormControl(kDimensionX),
       'dimensionY' : new FormControl(kDimensionY),
-      'dimensionZ' : new FormControl(kDimensionZ),
-      'childs'     : new FormControl(kchilds)
+      'dimensionZ' : new FormControl(kDimensionZ)
     });
 
   }
@@ -154,5 +171,21 @@ export class EditComponentComponent implements OnInit, OnDestroy {
   }
 
 
+}
+
+interface NewKomponent {
+   _name: string;
+   _description: string;
+   _sortorder: number;
+   _material: string;
+   _typ_1: string;
+   _typ_2: string;
+   _typ_3: string;
+   _weight: number;
+   _dimension_X: number;
+   _dimension_Y: number;
+   _dimension_Z: number;
+   _units: string;
+   _childsElement: NewKomponent[];
 }
 

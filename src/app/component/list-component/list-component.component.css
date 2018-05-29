@@ -7,4 +7,10 @@ tr > td, th {
   padding-bottom: 4px;
   font-size: 14px; }
 
+tr > td {
+  font-size: 12px; }
+
+pagination-controls {
+  font-size: 12px; }
+
 /*# sourceMappingURL=list-component.component.css.map */

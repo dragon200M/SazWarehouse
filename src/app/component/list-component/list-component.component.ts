@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromKomponent from '../store/komp.reducers';
@@ -9,6 +9,8 @@ import * as StockAction from '../../warehouse-stock/store/stock.actions';
 import * as $ from 'jquery';
 import 'datatables.net';
 import {DataserviceService} from '../../services/dataservice.service';
+import {Subject} from 'rxjs/Subject';
+
 
 
 @Component({
@@ -16,13 +18,18 @@ import {DataserviceService} from '../../services/dataservice.service';
   templateUrl: './list-component.component.html',
   styleUrls: ['./list-component.component.scss']
 })
-export class ListComponentComponent implements OnInit, AfterViewInit {
+export class ListComponentComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   komponentState: Observable<{komponents: Komponent[]}>;
+  komponents: Komponent[];
   id: number;
   ktmp: Komponent;
   public tableWidget: any;
+
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
 
   constructor(private store: Store<fromApp.AppState>,
@@ -31,54 +38,23 @@ export class ListComponentComponent implements OnInit, AfterViewInit {
               private ds: DataserviceService) { }
 
   ngOnInit() {
+
     this.komponentState = this.store.select('kompList');
-    // this.activeRouter.params.subscribe(
-    //   (params: Params) => {
-    //     this.id = +params['id'];
-    //   }
-    // )
-    //TODO komponent -> podglad stanu na magazynach
-    let tmp = [];
-    // this.komponentState.take(1).subscribe(
-    //   (k: any) => {
-    //     tmp = k.komponents;
-    //   }
-    // );
-    let tmpStock = [];
-    const warehouseKomponent = [];
-    this.store.select('warehouseStockList').subscribe(
-      (p: any) => {
-        tmpStock = p.warehouseStock;
-      }
-    );
-     let t = {
-      nazwa: '',
-      magazyn: '',
-      ilosc: 0
+    this.store.select('kompList').subscribe(r => {
+      this.komponents = r.komponents;
+    });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 30
     };
-    for (const a of tmp) {
-      const c = tmpStock.filter(p => p.komponent._name === a.name);
-      for (const d of c) {
-        t.nazwa = a.name;
-        t.magazyn = d.warehouse.name;
-        t.ilosc = d._stock;
-        warehouseKomponent.push(t);
-      }
-    }
   }
 
   ngAfterViewInit() {
-    this.initDatatable();
+    this.dtTrigger.next();
   }
 
-  private initDatatable(): void {
-    const exampleId: any = $('#bootstrap-data-table');
-    this.tableWidget = exampleId.DataTable({
-      pagingType: 'full_numbers',
-      pageLength: 20,
-      select: true,
-      'autoWidth': true
-    });
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
   }
 
   public selectRow(index: number, row: any) {
@@ -86,6 +62,13 @@ export class ListComponentComponent implements OnInit, AfterViewInit {
     this.ktmp = row;
   }
 
+  key: string = 'name';
+  reverse: boolean = false;
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+  p: number = 1;
 
 
 }

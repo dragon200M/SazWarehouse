@@ -5,7 +5,7 @@ export class Komponent {
   public _id: string;
   public _name: string;
   public _description: string;
-  public _sortorder:number;
+  public _sortorder: number;
   public _material: string;
   public _typ_1: Types;
   public _typ_2: Types;
@@ -30,12 +30,20 @@ export class Komponent {
   }
 
 
-  addChild(child: Komponent, quantity: number): void {
-    if(child._name !== this._name) {
-      for (let i = 0; i < quantity; i++ ) {
-        this._childsElement.push(child);
-      }
-    }
-  }
+}
 
+export interface NewKomponent {
+  _name: string;
+  _description: string;
+  _sortorder: number;
+  _material: string;
+  _typ_1: string;
+  _typ_2: string;
+  _typ_3: string;
+  _weight: number;
+  _dimension_X: number;
+  _dimension_Y: number;
+  _dimension_Z: number;
+  _units: string;
+  _childsElement: NewKomponent[];
 }
