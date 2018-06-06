@@ -1,45 +1,41 @@
-<div class="col-lg-6">
-<div class="card">
-  <div class="card-header">
-    <strong class="card-title">Komponenty</strong>
-  </div>
 
-  <div class="card-body">
+
+<input class="form-control" type="text" name="search" [(ngModel)]="filter">
+<br>
 <table  id="bootstrap-data-table" class="table table-striped table-bordered">
   <thead>
-  <th>Nazwa</th>
-  <th>Nazwa Wyswietlana</th>
-  <th>Opis</th>
-  <th>Dostepnosc</th>
+  <th (click)="sort('name')">Nazwa</th>
+  <th (click)="sort('visibleName')">Nazwa Wyswietlana</th>
+  <th (click)="sort('desc')">Opis</th>
+  <th (click)="sort('available')">Dostepnosc</th>
   <th>Akcja</th>
   </thead>
   <tbody>
-    <tr *ngFor = "let w of (war | async).warehouses; let i = index" >
+    <tr *ngFor = "let w of (war | async).warehouses | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 35, currentPage: p }; let i = index" >
         <td (click)="listClick(w.name)">{{w.name}}</td>
         <td (click)="listClick(w.name)">{{w.visibleName}}</td>
         <td (click)="listClick(w.name)">{{w.desc}}</td>
         <td (click)="listClick(w.name)">{{w.available}}</td>
         <td>
-          <button (click)="onAddElementToWarehouse(w.name)">Dodaj</button>
+          <button class="btn btn-primary" (click)="onAddElementToWarehouse(w.name)">Dodaj / Edycja</button>
         </td>
     </tr>
   </tbody>
 </table>
-  </div>
-</div>
-</div>
-<div class="col-lg-6">
-<div class="card">
-  <div class="card-header">
-    <strong class="card-title">Szczegóły</strong>
-  </div>
-  <div class="card-body">
-<div class="col-lg-6">
-<p>{{test.id}}</p>
-<p>{{test.name}}</p>
-<p>{{test.description}}</p>
-<p>{{test.available}}</p>
-</div>
-  </div>
-</div>
-</div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+<!--<div class="col-lg-6">-->
+<!--<div class="card">-->
+  <!--<div class="card-header">-->
+    <!--<strong class="card-title">Szczegóły</strong>-->
+  <!--</div>-->
+  <!--<div class="card-body">-->
+<!--<div class="col-lg-6">-->
+<!--<p>{{test.id}}</p>-->
+<!--<p>{{test.name}}</p>-->
+<!--<p>{{test.description}}</p>-->
+<!--<p>{{test.available}}</p>-->
+<!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--</div>-->

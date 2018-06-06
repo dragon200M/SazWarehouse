@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,MAAO;EACL,KAAK,EAAE,KAAK;EACZ,aAAa,EAAE,IAAI",
+"sources": ["warehouse.component.scss"],
 "names": [],
 "file": "warehouse.component.css"
 }

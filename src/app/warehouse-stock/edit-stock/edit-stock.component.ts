@@ -34,15 +34,7 @@ export class EditStockComponent implements OnInit , OnDestroy {
 
   ngOnInit() {
     this.komponentState = this.store.select('kompList');
-    this.store.select('warehouseList').take(1).subscribe(
-      (p: any ) => {
-            const tmp = p.warehouses;
 
-            const wartmp = tmp.filter(a => a.name === this.name);
-            this.warehousedesc = wartmp[0].description;
-            this.warehouse = wartmp[0];
-      }
-    );
     this.initForm();
   }
 
@@ -57,19 +49,7 @@ export class EditStockComponent implements OnInit , OnDestroy {
   }
 
   addStockToWarehouse() {
- this.store.select('warehouseList').take(1).subscribe(
-      (p: any ) => {
-        const tmp = p.warehouses;
-        const wartmp = tmp.filter(a => a.name === this.name);
-        this.warehousedesc = wartmp[0]._description;
-        this.warehouse = wartmp[0];
-      }
-    );
-     const s = this.stockForm.value;
-     const stock =
-       new StockModel({_kName: this.selectedKomponent._name, _wName: this.warehouse.name }, this.warehouse, this.selectedKomponent, s._stock);
-    console.log(this.warehouse);
-    this.stockStore.dispatch(new StockAction.AddStock(stock));
+
   }
   selectedItem(event) {
     this.komponentState.take(1).subscribe(

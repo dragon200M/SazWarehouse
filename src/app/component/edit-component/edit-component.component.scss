@@ -1,0 +1,44 @@
+.info {
+  letter-spacing: 1px;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  padding: 10px;
+  background: #e9ecef;
+  color: #495057;
+}
+.info-danger {
+  letter-spacing: 1px;
+  border: 1px solid #dc3545;
+  border-radius: .25rem;
+  padding: 10px;
+  background: #dc3545;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+
+.childs {
+  margin-top: 10px;
+}
+
+tr > td,th{
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 14px;
+}
+
+tr > td {
+  font-size: 14px;
+}
+
+.newBorder {
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  padding: 10px;
+  background: #e9ecef;
+}
+
+p {
+  margin:  1px;
+  color: #dc3545;
+}

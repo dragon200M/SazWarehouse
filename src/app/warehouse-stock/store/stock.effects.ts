@@ -37,7 +37,7 @@ export class MainEffects {
       return this.api.getStockAll(action.payload);
     })
     .map((war) => {
-      console.log(war);
+
       return {
         type: StockActions.ADD_STOCK_BY_ONE,
         payload: war

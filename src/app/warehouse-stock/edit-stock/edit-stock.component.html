@@ -1,27 +1,22 @@
 <div class="form">
-  <h2>{{name}} {{warehousedesc}}</h2>
-  <h3>Dodaj element do magazynu</h3>
+  <h3>Dodaj element do magazynu {{name}}</h3>
   <form [formGroup]="stockForm">
-    <div>
+    <div class="form-group">
       <label for="">Komponent</label>
-      <select formControlName="komponentName" (ngModelChange)="selectedItem($event)">
+      <select class="form-control" formControlName="komponentName" (ngModelChange)="selectedItem($event)">
         <option
           *ngFor="let k of (komponentState | async).komponents; let i = index"
           [value]="i">
           {{k._name}}
         </option>
       </select>
-      <div>
-        <p>Opis</p>
-        {{selectedKomponentDesc}}
-        {{selectedKomponentType}}
-     </div>
-
     </div>
-    <p>
+    <div class="form-group">
       <label for="">Ilość</label>
-      <input type="number" formControlName="stock">
-    </p>
+      <input class="form-control" type="number" formControlName="stock">
+    </div>
   </form>
 </div>
-<button (click) = "addStockToWarehouse()">Dodaj</button>
+<br>
+<button class="btn btn-primary" (click) = "addStockToWarehouse()">Dodaj</button>
+<button class="btn btn-danger">Usuń</button>

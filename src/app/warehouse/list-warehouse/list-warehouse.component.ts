@@ -34,4 +34,13 @@ export class ListWarehouseComponent implements OnInit,OnDestroy {
 
   }
 
+  key: string = 'name';
+  reverse: boolean = false;
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+  p: number = 1;
+
+
 }

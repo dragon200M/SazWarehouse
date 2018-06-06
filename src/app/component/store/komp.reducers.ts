@@ -35,25 +35,39 @@ export function komponentReducer(state = initialState, action: KomponentActions.
         komponents: [...state.komponents, action.payload]
       };
     case (KomponentActions.ERROR):
+      console.log(action.payload);
       return {
         ...state,
         errors: action.payload
       };
     case (KomponentActions.UPDATE_KOMPONENT):
-
-      const komp = state.komponents[action.payload.index];
-      const update = {
-        ...komp,
-        ...action.payload.updatedKompo
-      };
+      console.log('update komponent');
       const komponents = [...state.komponents];
-      komponents[action.payload.index] = update;
+      const komp = komponents.findIndex(w => w._name === action.payload.name);
+      komponents[komp] = action.payload.updatedKompo;
+      komponents[komp]._childsElement = action.payload.updatedKompo._childsElement;
+
       return {
         ...state,
         komponents: komponents
       };
+    case (KomponentActions.UPDATE_ONE_KOMPONENT):
+      console.log('Komponent update one');
+      const komponents1 = [...state.komponents];
+      const komp1 = komponents1.findIndex(w => w._name === action.payload.name);
+
+
+      komponents1[komp1] = action.payload.updatedKompo;
+      komponents1[komp1]._childsElement = action.payload.updatedKompo._childsElement;
+      console.log(komponents1[komp1]);
+
+      return {
+        ...state,
+        komponents: komponents1
+      };
     default:
       return state;
+
   }
 
 }

@@ -1,29 +1,33 @@
 <div class="form">
-  <h3>Dodaj nowy magazyn</h3>
+  <h4 [ngClass]="{'info-danger':editable, 'info': !editable}">{{editable ? 'Edycja: ' +id :'Nowy'}}</h4>
   <div *ngIf="checkname" class="alert alert-danger">
     <strong>Nazwa jest zajęta</strong>
   </div>
   <form [formGroup]="warehouseForm">
-    <p>
+    <div class="form-group">
       <label for="">Nazwa</label>
-      <input type="text" formControlName="name">
-    </p>
-    <p>
+      <input class="form-control" type="text" formControlName="name">
+    </div>
+    <div class="form-group">
       <label for="">Nazwa Wyswietlana</label>
-      <input type="text" formControlName="visible_name">
-    </p>
-    <p>
+      <input class="form-control" type="text" formControlName="visible_name">
+    </div>
+      <div class="form-group">
       <label for="">Opis</label>
-      <input type="text" formControlName="description">
-    </p>
-    <p>
+      <input class="form-control" type="text" formControlName="description">
+    </div>
+    <div class="form-group">
       <label for="">Dostepny</label>
-      <select formControlName="available">
+      <select class="form-control" formControlName="available">
         <option [value]="true">Tak</option>
         <option [value]="false">Nie</option>
       </select>
-    </p>
-
+    </div>
   </form>
 </div>
 <button (click)="onNewWarehouse()">Dodaj</button>
+
+<div *ngIf="editable">
+  <app-edit-stock [name]="id"></app-edit-stock>
+</div>
+

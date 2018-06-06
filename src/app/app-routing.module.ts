@@ -41,7 +41,7 @@ const appRoutes: Routes = [
   {path: 'magazyny', component: WarehouseComponent,
    children: [
      {path: 'new', component: EditWarehouseComponent },
-     {path: ':id/addStock', component: WarehouseStockComponent}
+     {path: ':id/addStock', component: EditWarehouseComponent}
    ]},
   {path: 'sztuki', component: OperationComponent},
   {path: 'glowne', component: OperationOnMainComponent},

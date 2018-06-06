@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,KAAM;EACJ,cAAc,EAAE,GAAG;EACnB,MAAM,EAAE,iBAAiB;EACzB,aAAa,EAAE,MAAM;EACrB,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,OAAO;;AAEhB,YAAa;EACX,cAAc,EAAE,GAAG;EACnB,MAAM,EAAE,iBAAiB;EACzB,aAAa,EAAE,MAAM;EACrB,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,IAAI;EACX,cAAc,EAAE,GAAG",
+"sources": ["edit-warehouse.component.scss"],
 "names": [],
 "file": "edit-warehouse.component.css"
 }

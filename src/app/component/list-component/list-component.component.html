@@ -25,7 +25,8 @@
     <!--</tr>-->
   <!--</tbody>-->
 <!--</table>-->
-
+<input class="form-control" type="text" name="search" [(ngModel)]="term" placeholder="wyszukaj">
+<br>
 <table id="bootstrap-data-table" class="table table-striped table-bordered
 table-hover dt-body-left">
   <thead>
@@ -39,7 +40,7 @@ table-hover dt-body-left">
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let k of (komponentState | async).komponents | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 35, currentPage: p }; let i = index"
+  <tr *ngFor="let k of (komponentState | async).komponents | orderBy: key : reverse | filter: term | paginate: { itemsPerPage: 35, currentPage: p }; let i = index"
       [routerLink] = "['edit',k?._name]">
     <td>{{k._name}}</td>
     <td>{{k._description}}</td>

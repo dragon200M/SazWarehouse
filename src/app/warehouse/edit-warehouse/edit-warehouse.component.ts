@@ -4,7 +4,7 @@ import {WarehouseModel} from '../warehouse.model';
 import * as WarehouseActions from '../store/warehouse.actions';
 import * as fromWarehouse from '../store/warehouse.reducers';
 
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
@@ -18,12 +18,29 @@ import {Observable} from 'rxjs/Observable';
 export class EditWarehouseComponent implements OnInit {
   warehouseForm: FormGroup;
   checkname = false;
+  id = '';
+  editable =  false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route:  ActivatedRoute,
               private router: Router,
-              private store: Store<fromWarehouse.FeatureState>) { }
+              private store:  Store<fromWarehouse.FeatureState>) { }
 
   ngOnInit() {
+    this.route.params.subscribe((p: Params) =>{
+      this.id = p['id'];
+      console.log(p);
+    });
+
+    this.route.url.subscribe(
+      (data: any) => {
+        for (const i of data) {
+          if (i.path === 'addStock') {
+            this.editable = true;
+            this.initForm();
+          }
+        }
+      });
+
     this.initForm();
   }
 
@@ -49,13 +66,23 @@ export class EditWarehouseComponent implements OnInit {
   }
 
   private initForm() {
-    const warehouseName = '';
-    const warehouseDesc = '';
-    const available = '';
-    const visibleName = '';
+    let warehouseName = '';
+    let warehouseDesc = '';
+    let available = false;
+    let visibleName = '';
+
+    if (this.editable) {
+      this.store.select('warehouseList').subscribe(w => {
+        const tmpWarehouse = w.warehouses.filter(el => el.name === this.id)[0];
+        warehouseName = tmpWarehouse.name;
+        warehouseDesc = tmpWarehouse.description;
+        available = tmpWarehouse.available;
+        visibleName = tmpWarehouse.visibleName;
+      });
+    }
 
     this.warehouseForm = new FormGroup({
-      'name': new FormControl(warehouseName),
+      'name': new FormControl({value: warehouseName, disabled: this.editable} ),
       'description': new FormControl(warehouseDesc),
       'available': new FormControl(available),
       'visible_name': new FormControl(visibleName)}
