@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { DataTablesModule } from 'angular-datatables';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { KomponentComponent } from './component/komponent.component';
@@ -87,7 +85,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     TreeModule,
-    DataTablesModule,
     Ng2SearchPipeModule,
     Ng2OrderModule,
     NgxPaginationModule,

@@ -151,6 +151,7 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
 
           this.updateInfo = true;
           this.updateCheck = false;
+          this.clearData();
           setTimeout(function() {
             this.updateInfo = false;
           }.bind(this), 3000);
@@ -159,6 +160,13 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
         this.updateCheck = true;
       }
 
+    });
+  }
+
+  clearData() {
+    this.tds.forEach( d => {
+      const tmp = d.nativeElement.children;
+      tmp[4].children[0].value = '';
     });
   }
 

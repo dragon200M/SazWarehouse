@@ -2,19 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WarehouseModel} from '../warehouse/warehouse.model';
-import {Types} from '../enums/types.enum';
-import {Komponent} from '../component/komponent.model';
 import {StockModel} from './stock.model';
-import {Observable} from 'rxjs/Observable';
-import * as fromApp from '../store/app.reducers';
-
 import * as fromWarehouse from '../warehouse/store/warehouse.reducers';
-import * as WarehouseActions from '../warehouse/store/warehouse.actions';
 import * as fromStock from './store/stock.reducers';
 import * as StockActions from './store/stock.actions';
 import 'rxjs/add/operator/take';
 import {Subject} from 'rxjs/Subject';
-import {Subscription} from 'rxjs/Subscription';
 
 
 @Component({
@@ -27,11 +20,7 @@ export class WarehouseStockComponent implements OnInit, OnDestroy {
   urlcheck: boolean;
   stockItemsGo = new Subject<StockModel[]>();
   warehouse = new Subject<WarehouseModel>();
-  w1: Subscription;
-  w2: Subscription;
-  w3: Subscription;
-  w4: Subscription;
-  w5: Subscription;
+  quantity = 0;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -44,13 +33,11 @@ export class WarehouseStockComponent implements OnInit, OnDestroy {
 
 
     this.urlcheck = false;
-    this.w1 = this.route.params.subscribe(
+    this.route.params.subscribe(
       params => { this.id = params['id'];
 
-      //TODO dodac znacznik mówiacy o tym czy juz został pobrany dany stan magazynowy
-      //moze kolejny sklep  i zmienna przy nazwie magazynu
 
-    this.w2 = this.stockStore.select('warehouseStockList').subscribe(
+    this.stockStore.select('warehouseStockList').subscribe(
           (p: any) => {
              const exist = p.downaloadedStock.indexOf(this.id);
              if (exist === -1) {
@@ -59,17 +46,20 @@ export class WarehouseStockComponent implements OnInit, OnDestroy {
                console.log('Pobieram1:' + this.id);
              }
           });
-        this.w3 = this.stockStore.select('warehouseStockList').subscribe(
+     this.stockStore.select('warehouseStockList').subscribe(
           (p: any) => {
-            this.stockItemsGo = p.warehouseStock
+            const el = p.warehouseStock
               .filter(e => e._id._wName === this.id);
+            this.stockItemsGo = el;
             console.log('Pobieram2:' + this.id);
+            this.quantity = el.length;
           });
-        this.w4 = this.store.select('warehouseList').subscribe(
+     this.store.select('warehouseList').subscribe(
         (p: any) => {
           const w = p.warehouses;
-          this.warehouse = w.filter(mag => mag.name === this.id)[0];
-
+          console.log(w);
+          this.warehouse = w.filter(mag => mag._name=== this.id)[0];
+          console.log(this.warehouse);
         }
       );
 
@@ -78,7 +68,7 @@ export class WarehouseStockComponent implements OnInit, OnDestroy {
 
 
 
-    this.w5 = this.route.url.subscribe(
+   this.route.url.subscribe(
       (data: any) => {
         for (const i of data) {
           if (i.path === 'addStock') {
@@ -91,11 +81,6 @@ export class WarehouseStockComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.w1.unsubscribe();
-    this.w2.unsubscribe();
-    this.w3.unsubscribe();
-    this.w4.unsubscribe();
-    this.w5.unsubscribe();
     console.log("Destroy: WarehouseStockComponent");
   }
 

@@ -1,5 +1,3 @@
-
-
 <input class="form-control" type="text" name="search" [(ngModel)]="filter">
 <br>
 <table  id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -12,16 +10,16 @@
   </thead>
   <tbody>
     <tr *ngFor = "let w of (war | async).warehouses | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 35, currentPage: p }; let i = index" >
-        <td (click)="listClick(w._name)">{{w._name}}</td>
-        <td (click)="listClick(w._name)">{{w._visibleName}}</td>
-        <td (click)="listClick(w._name)">{{w._desc}}</td>
-        <td (click)="listClick(w._name)">{{w._available}}</td>
+        <td>{{w._name}}</td>
+        <td>{{w._visibleName}}</td>
+        <td>{{w._desc}}</td>
+        <td>{{w._available}}</td>
         <td>
           <button class="btn btn-primary" (click)="onAddElementToWarehouse(w._name)">Dodaj / Edycja</button>
         </td>
     </tr>
   </tbody>
 </table>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+<pagination-controls class="new-pagination" class="new-pagination" (pageChange)="p = $event"></pagination-controls>
 
 

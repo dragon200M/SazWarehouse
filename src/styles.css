@@ -9,6 +9,9 @@ app-warehouse {
 app-komponent {
   width: 100%; }
 
+app-home {
+  width: 100%; }
+
 app-detail {
   width: 100%;
   min-height: 600px; }
@@ -25,5 +28,11 @@ app-summary {
 ul > p {
   margin-bottom: 0px;
   font-size: 14px; }
+
+.new-pagination /deep/ .ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #007bff;
+  color: #fefefe;
+  cursor: default; }
 
 /*# sourceMappingURL=styles.css.map */

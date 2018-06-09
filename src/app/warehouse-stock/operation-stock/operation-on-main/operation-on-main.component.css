@@ -7,7 +7,9 @@ tr > td, th {
   min-height: 500px; }
 
 .btn {
-  width: 100px; }
+  width: 100px;
+  margin-left: 21px;
+  margin-top: 10px; }
 
 .form-control {
   height: 38px;

@@ -226,7 +226,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
       'desc': new FormControl(komponentDesc),
       'weight': new FormControl(komponentWeight),
       'units': new FormControl(komponentUnits),
-      'type_1': new FormControl(komponentType1),
+      'type_1': new FormControl({value: komponentType1, disabled: this.editable}),
       'order' : new FormControl(komponentSortOrder),
       'material' : new FormControl(komponentMaterial),
       'dimensionX' : new FormControl(kDimensionX),

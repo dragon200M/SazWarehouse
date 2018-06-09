@@ -43,8 +43,6 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
 
-
-
     this.api.getMaxToDo().subscribe(
       r => {
        const tMain: MainHolder[] = [];
