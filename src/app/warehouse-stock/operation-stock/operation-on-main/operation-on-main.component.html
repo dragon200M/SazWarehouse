@@ -1,0 +1,75 @@
+<div class="card-header">
+    <div class="row">
+      <div class="col">
+        <button (click)="getTableData()" class="btn btn-primary">Oblicz</button>
+      </div>
+      <div class="col size-all">
+        <div class="col">
+          <div *ngIf="updateCheck" class="alert alert-danger">
+            <strong>Błąd</strong> Sprawdź listę poniżej. Błędny magazyn, błędny komponent lub stan ujemny.
+          </div>
+          <div *ngIf="updateInfo" class="alert alert-info">
+            Operacja powiodła się.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <input class="form-control top_margin" type="text" name="search" [(ngModel)]="filter" placeholder="wyszukaj">
+      <br>
+      <table  class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Komponent</th>
+          <th>Opis</th>
+          <th>Typ</th>
+          <th>Jednostki</th>
+          <th>Wydanie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let s of tabledataOperation | orderBy: key : reverse | filter: filter | paginate: { itemsPerPage: 20, currentPage: f7, id:'f7' };  let i = index" #tab>
+          <td>{{s.komName}}</td>
+          <td>{{s.komDesc}}</td>
+          <td>{{s.types}}</td>
+          <td>{{s.units}}</td>
+          <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="f7 = $event" id = "f7"></pagination-controls>
+    </div>
+
+    <div id = "second-table"  *ngIf = "newStockTable?.length > 0">
+      <div class="card-header">
+        <button (click)="saveData()" class="btn btn-primary" [disabled]="stockCheck" >Zapisz</button>
+      </div>
+      <div class="card-body">
+        <input class="form-control top_margin" type="text" name="search" [(ngModel)]="term" placeholder="wyszukaj">
+        <br>
+        <table  class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Magazyn</th>
+            <th>Komponent</th>
+            <th>Poprzedni stan</th>
+            <th>Nowy Stan</th>
+            <th>Ilosc</th>
+          </tr>
+          </thead>
+          <tbody >
+          <tr *ngFor="let s of newStockTable | orderBy: key2 : reverse2 | filter: term | paginate: { itemsPerPage: 20, currentPage: f8, id:'f8' };" class="red">
+            <td>{{s.warehouse}}</td>
+            <td>{{s.komponentName}}</td>
+            <td>{{s.stock}}</td>
+            <td
+              [ngClass]="{'alert alert-danger': s.newStock < 1,
+          'alert alert-warning': s.newStock < 200 ,
+          'alert alert-info': true}">
+              {{s.newStock}}</td>
+            <td>{{s.outgo}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="f8 = $event" id = "f8"></pagination-controls>
+      </div>
+    </div>

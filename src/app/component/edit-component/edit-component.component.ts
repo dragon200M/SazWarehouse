@@ -40,6 +40,10 @@ export class EditComponentComponent implements OnInit, OnDestroy {
   komponentsState: Observable<{komponents: Komponent[]}>;
   komponentsArr: Komponent[];
 
+  checkSortList = [];
+  tmpKomponents: Komponent[];
+
+
   keys(): Array<string> {
     const keys = Object.keys(Types);
     const w = [];
@@ -174,6 +178,10 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     let kDimensionZ = 0.0;
     let kchilds = [];
     const quantity = 0;
+    const gl = false;
+    const kp = false;
+    const ts = false;
+    const sz = false;
 
     if (this.editable) {
 
@@ -198,9 +206,13 @@ export class EditComponentComponent implements OnInit, OnDestroy {
               const tmpk = this.komponentsArr.filter(e => e._name === this.id)[0];
               if ( tmpk._typ_1 !== Types.tasma) {
                 this.komponents = this.komponentsArr.filter(e => e._name !== ktmp._name && !w.includes(e._name));
+                this.komponents.sort( (a, b) => a._name < b._name  ? -1 : a._name > b._name  ? 1 : 0);
+                this.tmpKomponents = this.komponents;
               } else {
                 this.komponents = this.komponentsArr
                   .filter(e => e._name !== ktmp._name && !w.includes(e._name) && e._typ_1 !== Types.tasma);
+                this.komponents.sort( (a, b) => a._name < b._name  ? -1 : a._name > b._name  ? 1 : 0);
+                this.tmpKomponents = this.komponents;
               }
             });
           }
@@ -221,7 +233,11 @@ export class EditComponentComponent implements OnInit, OnDestroy {
       'dimensionY' : new FormControl(kDimensionY),
       'dimensionZ' : new FormControl(kDimensionZ),
       'childs' : new FormControl(kchilds),
-      'quantity' : new FormControl(quantity, [Validators.min(0)])
+      'quantity' : new FormControl(quantity, [Validators.min(0)]),
+      'gl': new FormControl(gl),
+      'kp': new FormControl(kp),
+      'ts': new FormControl(ts),
+      'st': new FormControl(sz)
     });
 
   }
@@ -242,7 +258,35 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkValue(event: any) {
+    const check = event.target.checked;
+    const val = event.target.value;
 
+    if (check) {
+      this.checkSortList.push(val);
+    }
+    if (!check) {
+      const ind = this.checkSortList.indexOf(val);
+      if (ind > -1) {
+        this.checkSortList.splice(ind,1);
+      }
+    }
+
+    if (this.checkSortList.length > 0){
+      this.tmpKomponents = this.komponents.filter(k => this.checkkey(k._typ_1));
+    } else {
+      this.tmpKomponents = this.komponents;
+    }
+    this.tmpKomponents.sort( (a, b) => a._name < b._name  ? -1 : a._name > b._name  ? 1 : 0);
+  }
+
+  checkkey(typ: Types) {
+    const tmp = this.checkSortList.findIndex(el => el === typ);
+    if (tmp > -1) {
+      return true;
+    }
+    return false;
+  }
 
   ngOnDestroy() {
 

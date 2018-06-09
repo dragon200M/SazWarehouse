@@ -22,6 +22,12 @@ export class AddWarehouse implements Action {
   constructor(public payload: WarehouseModel) {}
 }
 
+export class UpdateWarehouse implements Action {
+  readonly  type = UPDATE_WAREHOUSE;
+  constructor(public payload:{name: string, updated: WarehouseModel }) {}
+}
+
+
 export class GetWarehouse implements Action {
   readonly type = GET_WAREHOUSE;
   constructor(public payload: string) {}
@@ -39,5 +45,10 @@ export class ErrorWarehouses implements Action {
 }
 
 export type WarehouseActions = SetWarehouse
-  |AddWarehouse|GetWarehouse|FetchWarehouses|StoreWarehouses|ErrorWarehouses;
+  |AddWarehouse
+  |GetWarehouse
+  |FetchWarehouses
+  |StoreWarehouses
+  |ErrorWarehouses
+  |UpdateWarehouse;
 

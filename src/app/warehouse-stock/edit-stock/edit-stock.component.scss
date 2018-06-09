@@ -1,0 +1,34 @@
+.info {
+  letter-spacing: 1px;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  padding: 10px;
+  background: #e9ecef;
+  color: #495057;
+}
+tr > td,th{
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 14px;
+}
+
+tr > td {
+  font-size: 14px;
+}
+
+.top_margin {
+  margin-top: 20px;
+}
+.left_margin{
+  margin-left: 30px;
+}
+
+.free {
+  background: #dcf0fa;
+  color: #31708f;
+}
+
+.stock_include {
+  background: #f2dede;
+  color: #a94442;
+}

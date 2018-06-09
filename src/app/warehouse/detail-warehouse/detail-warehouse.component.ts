@@ -29,7 +29,7 @@ export class DetailWarehouseComponent implements OnInit {
           .subscribe((warState: fromWarehouses.State) => {
 
             const tmp = warState.warehouses.filter(
-              w => w.name === this.id
+              w => w._name === this.id
             );
             this.warehouse = tmp[0];
 

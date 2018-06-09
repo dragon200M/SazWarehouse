@@ -25,12 +25,9 @@ export class ListComponentComponent implements OnInit, AfterViewInit, OnDestroy 
   komponents: Komponent[];
   id: number;
   ktmp: Komponent;
-  public tableWidget: any;
-
-
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
-
+  key: string = 'name';
+  reverse: boolean = false;
+  p: number = 1;
 
   constructor(private store: Store<fromApp.AppState>,
               private route: ActivatedRoute,
@@ -43,18 +40,13 @@ export class ListComponentComponent implements OnInit, AfterViewInit, OnDestroy 
     this.store.select('kompList').subscribe(r => {
       this.komponents = r.komponents;
     });
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 30
-    };
+
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.next();
   }
 
   ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
   }
 
   public selectRow(index: number, row: any) {
@@ -62,13 +54,12 @@ export class ListComponentComponent implements OnInit, AfterViewInit, OnDestroy 
     this.ktmp = row;
   }
 
-  key: string = 'name';
-  reverse: boolean = false;
+
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
-  p: number = 1;
+
 
 
 }

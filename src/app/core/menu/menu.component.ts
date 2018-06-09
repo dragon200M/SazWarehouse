@@ -42,9 +42,9 @@ export class MenuComponent implements OnInit {
       (w: any) => {
         const d = w.warehouses;
         this.visibleWarehouses =
-          d.filter(a => a.available === true);
+          d.filter(a => a._available === true);
         this.unvisibleWarehouses =
-          d.filter(a => a.available === false);
+          d.filter(a => a._available === false);
       }
     );
   }

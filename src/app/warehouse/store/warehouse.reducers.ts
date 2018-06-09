@@ -29,7 +29,7 @@ export function warehouseReducer(state = initialState, action: WarehouseActions.
       };
     case (WarehouseActions.GET_WAREHOUSE):
       const warehouse = state.warehouses.filter(
-        w => w.name === action.payload);
+        w => w._name === action.payload);
       return {
         ...state,
         warehouses: warehouse,
@@ -40,6 +40,15 @@ export function warehouseReducer(state = initialState, action: WarehouseActions.
         ...state,
         warehouses: [...state.warehouses, action.payload],
         errors: false
+      };
+    case (WarehouseActions.UPDATE_WAREHOUSE):
+      const warehouses = [...state.warehouses];
+      const warInd = warehouses.findIndex(w => w._name === action.payload.name);
+      warehouses[warInd] = action.payload.updated;
+
+      return {
+        ...state,
+        warehouses: warehouses
       };
     case (WarehouseActions.ERROR):
       return {

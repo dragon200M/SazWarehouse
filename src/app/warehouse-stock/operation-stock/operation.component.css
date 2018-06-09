@@ -1,0 +1,20 @@
+tr > td, th {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 14px; }
+
+#second-table {
+  min-height: 500px; }
+
+.btn {
+  width: 100px; }
+
+.form-control {
+  height: 38px;
+  font-size: 12px; }
+
+.size-all {
+  width: 100%;
+  padding: 0; }
+
+/*# sourceMappingURL=operation.component.css.map */

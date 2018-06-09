@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {WarehouseModel} from './warehouse.model';
 import { Store } from '@ngrx/store';
 import * as fromWarehouse from './store/warehouse.reducers';
-import * as WarehousesAction from './store/warehouse.actions';
+
 import {ActivatedRoute, Router} from '@angular/router';
 
 
@@ -22,8 +22,9 @@ export class WarehouseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
- //   this.store.dispatch(new WarehousesAction.FetchWarehouses());
+
     this.warehouseList = this.store.select('warehouseList');
+
   }
 
   onNewWarehouse() {

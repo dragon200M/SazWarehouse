@@ -1,0 +1,56 @@
+<div class="card-body">
+  <input class="form-control top_margin" type="text" name="search" [(ngModel)]="filter" placeholder="wyszukaj">
+  <br>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Komponent</th>
+      <th>Opis</th>
+      <th>Typ</th>
+      <th>Jednostki</th>
+      <th>Max</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr *ngFor="let s of tabledata | orderBy: key : reverse | filter: filter | paginate: { itemsPerPage: 10, currentPage: f5, id:'f5' }; let i = index" #tab>
+      <td>{{s.komponentModel}}</td>
+      <td>{{s.komDesc}}</td>
+      <td>{{s.types}}</td>
+      <td>{{s.units}}</td>
+      <td>{{s.resoult}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="f5 = $event" id = "f5"></pagination-controls>
+</div>
+
+
+<div class="card-body">
+  <input class="form-control top_margin" type="text" name="search" [(ngModel)]="term" placeholder="wyszukaj">
+  <br>
+  <table  class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Taśma</th>
+      <th>Opis</th>
+      <th>Typ</th>
+      <th>Jednostki</th>
+      <th>Komponent</th>
+      <th>Opis</th>
+      <th>Max</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr *ngFor="let s of tabledata2 | orderBy: key2 : reverse2 | filter: term | paginate: { itemsPerPage: 10, currentPage: f6, id:'f6' }; let i = index" #tab>
+      <td>{{s.roller}}</td>
+      <td>{{s.rollerDesc}}</td>
+      <td>{{s.types}}</td>
+      <td>{{s.units}}</td>
+      <td>{{s.komponentModel}}</td>
+      <td>{{s.komDesc}}</td>
+      <td>{{s.resoult}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="f6 = $event" id = "f6"></pagination-controls>
+</div>

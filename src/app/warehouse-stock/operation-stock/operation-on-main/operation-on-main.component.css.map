@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAU;EACR,WAAW,EAAE,GAAG;EAChB,cAAc,EAAE,GAAG;EACnB,SAAS,EAAE,IAAI;;AAGjB,aAAc;EACZ,UAAU,EAAE,KAAK;;AAGnB,IAAK;EACH,KAAK,EAAE,KAAK;;AAGd,aAAa;EACX,MAAM,EAAE,IAAI;EACZ,SAAS,EAAE,IAAI;;AAGjB,SAAS;EACP,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,CAAC",
+"sources": ["operation-on-main.component.scss"],
+"names": [],
+"file": "operation-on-main.component.css"
+}

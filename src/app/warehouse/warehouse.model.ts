@@ -1,17 +1,17 @@
 import {Komponent} from '../component/komponent.model';
 
 export class WarehouseModel {
-  public id: string;
-  public name: string;
-  public description: string;
-  public available: boolean;
-  public visibleName: string;
+  public _id: string;
+  public _name: string;
+  public _description: string;
+  public _available: boolean;
+  public _visibleName: string;
 
   constructor(id: string, name: string, description: string, available: boolean) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.available = available;
+    this._id = id;
+    this._name = name;
+    this._description = description;
+    this._available = available;
   }
 
 }

@@ -30,7 +30,7 @@ export class WarehouseEffects {
         console.log('Load  warehouses');
         for (const e of war) {
           const w = new WarehouseModel(e._name, e._name, e._description, e._available);
-          w.visibleName = e._visibleName;
+          w._visibleName = e._visibleName;
           tmp.push(w);
         }
 
@@ -56,7 +56,7 @@ export class WarehouseEffects {
       } else {
 
         const w = new WarehouseModel(war._name, war._name, war._description, war._available);
-        w.visibleName = war._visibleName;
+        w._visibleName = war._visibleName;
 
         return {
           type: WarehouseActions.ADD_WAREHOUSE,

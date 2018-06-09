@@ -1,0 +1,93 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col">
+      <button (click)="getTableData()" class="btn btn-primary">Oblicz</button>
+      <a href = "{{stockUrl}}"  class="btn btn-primary pull-right">Excel</a>
+    </div>
+    <div class="col size-all">
+      <form >
+        <div class="input-group">
+        <span class="input-group-btn">
+          <button (click) = "onUpload()" class="btn btn-primary" type="button">Wczytaj</button>
+         </span>
+          <input type="file" id = "file"
+                 class="form-control"
+                 accept=".xls"
+                 (change) = "handleFileUpload($event.target.files)"
+                 #fileInput multiple>
+        </div>
+      </form>
+    </div>
+    <div class="col">
+      <div *ngIf="updateCheck" class="alert alert-danger">
+        <strong>Błąd</strong> Sprawdź listę poniżej. Błędny magazyn, błędny komponent lub stan ujemny.
+      </div>
+      <div *ngIf="updateInfo" class="alert alert-info">
+        Operacja powiodła się.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <input class="form-control top_margin" type="text" name="search" [(ngModel)]="filter" placeholder="wyszukaj">
+  <br>
+  <table  class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th (click)="sort('wareName')">Magazyn</th>
+      <th (click)="sort('komName')">Komponent</th>
+      <th (click)="sort('komDesc')">Opis</th>
+      <th (click)="sort('types')">Typ</th>
+      <th (click)="sort('units')">Jednostki</th>
+      <th (click)="sort('stock')">Stan</th>
+      <th>Przyjecie</th>
+      <th>Wydanie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let s of tabledataOperation | orderBy: key : reverse | filter: filter | paginate: { itemsPerPage: 50, currentPage: f2, id:'f2' }; let i = index" #tab>
+      <td>{{s.wareName}}</td>
+      <td>{{s.komName}}</td>
+      <td>{{s.komDesc}}</td>
+      <td>{{s.types}}</td>
+      <td>{{s.units}}</td>
+      <td>{{s.stock}}</td>
+      <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
+      <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="f2 = $event" id = "f2"></pagination-controls>
+</div>
+
+<div id = "second-table"  *ngIf = "newStockTable?.length > 0">
+  <div class="card-header">
+    <button (click)="saveData()" class="btn btn-primary" [disabled]="stockCheck" >Zapisz</button>
+  </div>
+  <div class="card-body">
+    <input class="form-control top_margin" type="text" name="search" [(ngModel)]="term" placeholder="wyszukaj">
+    <br>
+    <table id="bootstrap-data-table2" class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th (click)="sort2('warehouse')">Magazyn</th>
+        <th (click)="sort2('komponentName')">Komponent</th>
+        <th>Nowy Stan</th>
+        <th>Poprzedni stan</th>
+      </tr>
+      </thead>
+      <tbody >
+      <tr *ngFor="let s of newStockTable | orderBy: key2 : reverse2 | filter: term | paginate: { itemsPerPage: 25, currentPage: f3, id:'f3' };" class="red">
+        <td>{{s.warehouse}}</td>
+        <td>{{s.komponentName}}</td>
+        <td
+          [ngClass]="{'alert alert-danger': s.newStock < 1,
+          'alert alert-warning': s.newStock < 200 ,
+          'alert alert-info': true}">
+          {{s.newStock}}</td>
+        <td>{{s.stock}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="f3 = $event" id = "f3"></pagination-controls>
+  </div>
+</div>

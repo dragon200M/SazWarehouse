@@ -1,0 +1,25 @@
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header"><p>Modele</p></div>
+    <a [ngClass]="{disabled : !editable}" class="btn btn-primary"
+       routerLink="edit/{{komponentName}}" role="button">EDYCJA</a>
+    <div class="card-body" style="height: 500px">
+        <tree-root  [nodes]="nodes" [options]="options" (activate)="onEvent($event)">
+          <ng-template #treeNodeTemplate let-node let-index="index">
+            <span><strong>{{ node.data._name }}</strong> {{node.data._description}} ( {{node.data._childsElement.length}} )</span>
+          </ng-template>
+        </tree-root>
+  </div>
+</div>
+</div>
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header"><p>Edycja</p></div>
+    <div class="card-body">
+
+        <router-outlet></router-outlet>
+
+    </div>
+  </div>
+</div>
+

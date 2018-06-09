@@ -29,19 +29,42 @@ const initialState: State = {
 export function stockReducer(state = initialState, action: StockActions.StockActions) {
   switch (action.type) {
     case (StockActions.SET_STOCK):
+
       return {
         ...state,
         warehouseStock: [...action.payload]
       };
+    case (StockActions.DELETE_STOCK):
+      const stocksArr = [...state.warehouseStock];
+      const stockInd = stocksArr.findIndex(
+        st => st._id._wName === action.payload.warehouse &&
+                 st._id._kName === action.payload.komponent);
+      if (stockInd > -1) {
+        console.log(stocksArr[stockInd]);
+        stocksArr.splice(stockInd, 1);
+      }
+      return {
+        ...state,
+        warehouseStock: stocksArr
+      };
+    case (StockActions.DELETE_WAREHOUSE_STOCK):
+      const stocksArr1 = [...state.warehouseStock];
+      const tmpStock = stocksArr1.filter(stEle => !action.payload.includes(stEle._id._wName));
+
+
+      return {
+        ...state,
+        warehouseStock: tmpStock
+      };
     case (StockActions.ADD_STOCK):
       const tmp = state.warehouseStock;
       const pay = action.payload;
-      const s = tmp.filter(f => f.warehouse.name === pay.warehouse.name
+      const s = tmp.filter(f => f.warehouse._name === pay.warehouse._name
         && f.component._name === pay.component._name );
       let a1: StockModel[];
       if (s.length > 0) {
 
-       const i = tmp.findIndex(b => b.warehouse.name === s[0].warehouse.name &&
+       const i = tmp.findIndex(b => b.warehouse._name === s[0].warehouse._name &&
          b.component._name === s[0].component._name);
        s[0]._stock += action.payload._stock;
        tmp[i] = s[0];
@@ -57,7 +80,7 @@ export function stockReducer(state = initialState, action: StockActions.StockAct
       };
     case (StockActions.GET_STOCK):
       const stock = state.warehouseStock.filter(
-        a => a.warehouse.name === action.payload);
+        a => a.warehouse._name === action.payload);
       return {
         ...state,
         warehouseStock: stock
@@ -92,9 +115,9 @@ export function stockReducer(state = initialState, action: StockActions.StockAct
     case (StockActions.GET_KOMPONENTES_STOCK):
      //TODO naprawic sumowanie wedlug magazynu i komponentow
       const warStock1 = state.warehouseStock;
-      let tmp1 = {material: '', magazyn: '', ilosc: 0};
-      let tmp2 = [];
-      if(warStock1.length > 0) {
+      const tmp1 = {material: '', magazyn: '', ilosc: 0};
+      const tmp2 = [];
+      if (warStock1.length > 0) {
         // for (let s of warStock1) {
         //   const k1 = s.komponent.name;
         //   const w1 = s.warehouse.name;
@@ -123,7 +146,7 @@ export function stockReducer(state = initialState, action: StockActions.StockAct
       console.log(state.komponentsSumUp);
       return {
         ...state,
-        komponentsSumUp:[...state.komponentsSumUp,...tmp2]
+        komponentsSumUp: [...state.komponentsSumUp, ...tmp2]
       };
       default:
       return state;
