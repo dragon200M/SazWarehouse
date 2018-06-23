@@ -25,14 +25,13 @@ export class DetailComponent implements OnInit {
   };
 
   constructor(private store: Store<fromApp.AppState>) {
+
   }
 
   ngOnInit() {
 
-
     this.store.select('kompList').subscribe(
       (kom) => {
-
         this.nodes = kom.komponents.filter( p => p._typ_1 !== 'SZTUKA');
       }
     );
@@ -42,13 +41,12 @@ export class DetailComponent implements OnInit {
   prints() {
     const treeModel: TreeModel = this.treeComponent.treeModel;
 
-    console.log(treeModel.getFocusedNode().data._name);
+
   }
 
   onEvent(event) {
     this.komponentName = event.node.data._name;
     this.editable = true;
-    console.log(event.node.data._name);
   }
 
 }

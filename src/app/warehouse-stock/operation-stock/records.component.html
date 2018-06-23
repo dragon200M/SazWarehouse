@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Rejestr</h4>
+    <div class="row">
+      <div class="d-inline-block">
+        <label>Start</label><ng-datepicker [(ngModel)]="date" [options]="options"></ng-datepicker>
+      </div>
+      <div class="d-inline-block">
+        <label>Koniec</label><ng-datepicker [(ngModel)]="date2" [options]="options"></ng-datepicker>
+      </div>
+      <div class="d-inline-block">
+        <button class="btn btn-primary" (click) = "getRecords()" >Szukaj</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>Ilość: {{quantity}}</p>
+    <br>
+    <input class="form-control top_margin" type="text" name="search" [(ngModel)]="filter" placeholder="wyszukaj">
+    <br>
+    <table  class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th (click)="sort('time')">Data</th>
+        <th (click)="sort('warehouseName')">Magazyn</th>
+        <th (click)="sort('komponentName')">Komponent</th>
+        <th (click)="sort('type')">Typ</th>
+        <th (click)="sort('newStock')">Ilosc</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of records | orderBy: key : reverse | filter: filter | paginate: { itemsPerPage: 100, currentPage: g2, id:'g2' }; let i = index" #tab>
+        <td>{{s?.time}}</td>
+        <td>{{s?.warehouseName}}</td>
+        <td>{{s?.komponentName}}</td>
+        <td>{{s?.type}}</td>
+        <td>{{s?.newStock}}</td>
+      </tbody>
+    </table>
+    <pagination-controls class="new-pagination" (pageChange)="g2 = $event" id = "g2"></pagination-controls>
+  </div>
+</div>

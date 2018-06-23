@@ -37,7 +37,7 @@
         <td>{{s.komDesc}}</td>
         <td>{{s.types}}</td>
         <td>{{s.units}}</td>
-        <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
+        <td><input type="number" onkeypress="return event.charCode >= 48" min = "0" step="1"></td>
       </tbody>
     </table>
     <pagination-controls class="new-pagination" (pageChange)="f7 = $event" id = "f7"></pagination-controls>

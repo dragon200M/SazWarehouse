@@ -41,8 +41,8 @@ export class EditStockComponent implements OnInit , OnDestroy, OnChanges {
   tmpSelectedKomponent: FreeKomponents;
   insertCheck = false;
   deleteCheck = false;
-  warehouseQuantity =0;
-
+  warehouseQuantity = 0;
+  filter = '';
 
   constructor(
     private store: Store<fromApp.AppState>,

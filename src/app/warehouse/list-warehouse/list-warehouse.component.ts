@@ -11,6 +11,7 @@ import {WarehouseModel} from '../warehouse.model';
 export class ListWarehouseComponent implements OnInit, OnDestroy {
   @Input() war;
 
+  filter = '';
   constructor(private router: Router,
               private route: ActivatedRoute) { }
 

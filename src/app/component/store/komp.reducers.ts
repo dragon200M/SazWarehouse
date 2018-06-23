@@ -24,6 +24,7 @@ const initialState: State = {
 export function komponentReducer(state = initialState, action: KomponentActions.KomponentActions) {
   switch (action.type) {
     case (KomponentActions.SET_KOMPONENT):
+
       return {
         ...state,
         komponents: [...action.payload]

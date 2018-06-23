@@ -25,6 +25,9 @@ app-operation-on-main {
 app-summary {
   width: 100%; }
 
+app-records {
+  width: 100%; }
+
 ul > p {
   margin-bottom: 0px;
   font-size: 14px; }

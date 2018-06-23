@@ -44,6 +44,8 @@ import { OperationOnMainComponent } from './warehouse-stock/operation-stock/oper
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { RecordsComponent } from './warehouse-stock/operation-stock/records.component';
+import {NgDatepickerModule} from 'ng2-datepicker';
 
 
 
@@ -73,6 +75,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     OperationComponent,
     SummaryComponent,
     OperationOnMainComponent,
+    RecordsComponent,
 
   ],
   imports: [
@@ -88,6 +91,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     Ng2SearchPipeModule,
     Ng2OrderModule,
     NgxPaginationModule,
+    NgDatepickerModule,
    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [ ApiService , DataserviceService],

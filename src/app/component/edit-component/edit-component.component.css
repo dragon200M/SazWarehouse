@@ -39,4 +39,7 @@ p {
 .left_margin {
   margin-left: 30px; }
 
+.is-invalid2 {
+  border-color: #dc3545; }
+
 /*# sourceMappingURL=edit-component.component.css.map */

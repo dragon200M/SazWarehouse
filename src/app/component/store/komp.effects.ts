@@ -55,6 +55,7 @@ addComponent = this.action$
   updateComponent = this.action$
     .ofType(componentsActions.UPDATE_KOMPONENT)
     .switchMap((action: componentsActions.UpdateKomponent) => {
+
       return this.apiService.updateComponent(action.payload.updatedKompo, action.payload.name);
     }).map((kom) => {
       if (kom.hasOwnProperty('error')) {

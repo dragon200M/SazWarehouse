@@ -54,15 +54,15 @@
       <td>{{s.types}}</td>
       <td>{{s.units}}</td>
       <td>{{s.stock}}</td>
-      <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
-      <td><input type="number" onkeypress="return event.charCode >= 48" min = "0"></td>
+      <td><input type="text"  (keypress)="decimalCheck(el,$event)"  #el></td>
+      <td><input type="text"  (keypress)="decimalCheck(el2,$event)"  #el2></td>
     </tbody>
   </table>
   <pagination-controls class="new-pagination" (pageChange)="f2 = $event" id = "f2"></pagination-controls>
 </div>
 </div>
 <div class="card" *ngIf = "newStockTable?.length > 0">
-  <div id = "second-table"  >
+  <div id = "second-table">
     <div class="card-header">
       <button (click)="saveData()" class="btn btn-primary" [disabled]="stockCheck" >Zapisz</button>
     </div>

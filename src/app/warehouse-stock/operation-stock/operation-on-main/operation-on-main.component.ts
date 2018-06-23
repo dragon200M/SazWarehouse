@@ -24,6 +24,8 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
   updateCheck = false;
   updateInfo = false;
   stockCheck: boolean;
+  filter = '';
+  term = '';
 
 
   constructor(private store: Store<fromApp.AppState>,
@@ -34,6 +36,8 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.api.getMainComponents().subscribe(k => {
+      console.log(k);
+
       k.forEach(el => {
         const tmp: StockHolder = {
           wareName: '',
@@ -50,7 +54,6 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
       });
 
     });
-
   }
 
   ngOnDestroy() {
@@ -64,7 +67,6 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
     this.tds.forEach( d => {
       const tmp = d.nativeElement.children;
       let to = parseFloat(tmp[4].children[0].value);
-
       if (isNaN(to)) {
         to = 0;
       }
@@ -111,7 +113,7 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
           newStock: el.oldStock - el.newStock
         };
         this.newStockTable.push(st);
-        if(st.newStock < 0) {
+        if ( st.newStock < 0) {
           this.stockCheck = true;
         }
       });
@@ -169,6 +171,19 @@ export class OperationOnMainComponent implements OnInit, OnDestroy {
       tmp[4].children[0].value = '';
     });
   }
+  decimalCheck(el, evt) {
+    const charCode = (evt.which) ? evt.which : evt.keyCode;
+    const number = el.value.split(',');
+
+    if (charCode !== 44 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+
+    if(number.length > 1 && charCode === 44){
+      return false;
+    }
+  }
+
 
 
 

@@ -19,6 +19,7 @@ import {DetailComponent} from './recipe/detail-recipe/detail.component';
 import {OperationComponent} from './warehouse-stock/operation-stock/operation.component';
 import {SummaryComponent} from './warehouse-stock/operation-stock/summary.component';
 import {OperationOnMainComponent} from './warehouse-stock/operation-stock/operation-on-main/operation-on-main.component';
+import {RecordsComponent} from './warehouse-stock/operation-stock/records.component';
 
 
 
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   {path: 'sztuki', component: OperationComponent},
   {path: 'glowne', component: OperationOnMainComponent},
   {path: 'counts', component: SummaryComponent},
+  {path: 'rejestr', component: RecordsComponent },
   {path: ':id', component: WarehouseStockComponent }
 
 ];

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAU;EACR,WAAW,EAAE,GAAG;EAChB,cAAc,EAAE,GAAG;EACnB,SAAS,EAAE,IAAI;;AAGjB,eAAgB;EACd,WAAW,EAAE,IAAI;EACjB,UAAU,EAAE,GAAG;;AAGjB,MAAO;EACL,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,GAAG;EACZ,YAAY,EAAE,IAAI;EAClB,aAAa,EAAE,IAAI",
+"sources": ["records.component.scss"],
+"names": [],
+"file": "records.component.css"
+}

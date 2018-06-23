@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Komponent} from '../komponent.model';
 import {Types} from '../../enums/types.enum';
@@ -8,12 +8,8 @@ import * as fromKomponent from '../store/komp.reducers';
 import {Units} from '../../enums/units.enums';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {async} from '@angular/core/testing';
-import {DataserviceService} from '../../services/dataservice.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Subject} from 'rxjs/Subject';
 import {ApiService} from '../../services/api.service';
-import {DataTableDirective} from 'angular-datatables';
+import {init} from 'protractor/built/launcher';
 
 @Component({
   selector: 'app-edit-component',
@@ -35,6 +31,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
   isNotSztuka: boolean;
   komponents: Komponent[];
   checkTasma = false;
+  checkMaxQuantity = false;
   checkChild = false;
   resoult: any;
   komponentsState: Observable<{komponents: Komponent[]}>;
@@ -42,6 +39,8 @@ export class EditComponentComponent implements OnInit, OnDestroy {
 
   checkSortList = [];
   tmpKomponents: Komponent[];
+  blockTypeVal = false;
+  canSave = false;
 
 
   keys(): Array<string> {
@@ -68,7 +67,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
               private router: Router,
               private store: Store<fromKomponent.FeatureState>,
               private store2: Store<fromKomponent.State>,
-              private api: ApiService) { }
+              private api: ApiService) {}
 
   ngOnInit() {
     console.log('init edit komponent');
@@ -76,6 +75,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.id = params['id'];
         this.editable = params['id'] != null ;
+        this.blockTypeVal = this.editable;
         this.komponentsState = this.store.select('kompList');
         this.komponentsState.subscribe(el => {
           this.komponentsArr = el.komponents;
@@ -86,33 +86,31 @@ export class EditComponentComponent implements OnInit, OnDestroy {
         if (params['id'] != null) {
           this.childKomponents = [];
 
-            const tmp = this.komponentsArr.filter(w => w._childsElement.length > 0 && w._name === this.id)[0];
+            // const tmp = this.komponentsArr.filter(w => w._childsElement.length > 0 && w._name === this.id)[0];
 
-            if (undefined !== tmp) {
-              console.log(tmp);
-              const a = new Map<string, {element: Komponent, ilosc: number}>();
-              tmp._childsElement.forEach(item => {
-                if (!a.get(item._name)) {
-                  a.set(item._name, { element: item, ilosc: 1});
-                } else {
-                  a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
-                }
-              });
-
-              a.forEach((v, k, m) => {
-                this.childKomponents.push(v);
-              });
-
-            }
-
+          this.getChilds(this.id);
+            // if (undefined !== tmp) {
+            //   const a = new Map<string, {element: Komponent, ilosc: number}>();
+            //   tmp._childsElement.forEach(item => {
+            //     if (!a.get(item._name)) {
+            //       a.set(item._name, { element: item, ilosc: 1});
+            //     } else {
+            //       a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
+            //     }
+            //   });
+            //
+            //   a.forEach((v, k, m) => {
+            //     this.childKomponents.push(v);
+            //   });
+            // }
         }
-
-
       }
     );
 
 
   }
+
+
 
 
   onNewKomponent() {
@@ -128,16 +126,19 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     tmpKomp._sortorder = t['order'];
     tmpKomp._material = t['material'];
 
-    if (this.editable) {
+
+
+    if (this.editable ) {
+
+      this.blockTypeVal = true;
       let tmpChilds = [];
-
-
           const name = this.komponentsArr.findIndex(w => w._name === tmpKomp._name);
           this.ind = name;
           tmpChilds = this.komponentsArr.filter(k => k._name === tmpKomp._name)[0]._childsElement;
 
-        if ( this.ind > -1 ) {
 
+
+        if ( this.ind > -1 ) {
           this.testPowodzenie = this.store.select('kompList');
           tmpKomp._childsElement.length = 0;
           tmpKomp._childsElement = tmpChilds;
@@ -153,13 +154,14 @@ export class EditComponentComponent implements OnInit, OnDestroy {
         }
 
     } else if (!this.existsKomp && this.komponentForm.controls['name'].valid) {
+
       this.testPowodzenie = this.store.select('kompList');
       this.store.dispatch(new KomponentActions.StoreKomponent(tmpKomp));
       this.powodzenie = true;
 
       setTimeout(function() {
         this.powodzenie = false;
-        this.komponentForm.reset();
+        this.initForm();
       }.bind(this), 3000);
     }
    this.validForm = !this.komponentForm.controls['name'].valid;
@@ -182,6 +184,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     const kp = false;
     const ts = false;
     const sz = false;
+    const blokada = false;
 
     if (this.editable) {
 
@@ -197,6 +200,7 @@ export class EditComponentComponent implements OnInit, OnDestroy {
           kDimensionY = ktmp._dimension_Y;
           kDimensionZ = ktmp._dimension_Z;
           kchilds = [];
+
           if (ktmp._typ_1 === Types.sztuka) {
             this.isNotSztuka = false;
           } else {
@@ -222,22 +226,23 @@ export class EditComponentComponent implements OnInit, OnDestroy {
 
 
     this.komponentForm = new FormGroup({
-      'name': new FormControl(komponentName, [Validators.minLength(2), Validators.maxLength(60)]),
+      'name': new FormControl(komponentName, [Validators.minLength(2), Validators.maxLength(60), Validators.required]),
       'desc': new FormControl(komponentDesc),
       'weight': new FormControl(komponentWeight),
       'units': new FormControl(komponentUnits),
-      'type_1': new FormControl({value: komponentType1, disabled: this.editable}),
+      'type_1': new FormControl(komponentType1),
       'order' : new FormControl(komponentSortOrder),
       'material' : new FormControl(komponentMaterial),
       'dimensionX' : new FormControl(kDimensionX),
       'dimensionY' : new FormControl(kDimensionY),
       'dimensionZ' : new FormControl(kDimensionZ),
       'childs' : new FormControl(kchilds),
-      'quantity' : new FormControl(quantity, [Validators.min(0)]),
+      'quantity' : new FormControl(quantity, [Validators.min(0), Validators.max(25), Validators.required]),
       'gl': new FormControl(gl),
       'kp': new FormControl(kp),
       'ts': new FormControl(ts),
-      'st': new FormControl(sz)
+      'st': new FormControl(sz),
+      'blokada' : new FormControl(blokada),
     });
 
   }
@@ -280,6 +285,31 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     this.tmpKomponents.sort( (a, b) => a._name < b._name  ? -1 : a._name > b._name  ? 1 : 0);
   }
 
+  checkType(event: any) {
+    const w = event.target.value;
+
+    if (this.editable) {
+      const ktmp2 = this.komponentsArr.filter(k => k._name === this.id)[0];
+      if(ktmp2._childsElement.length > 0 && w === 'SZTUKA'){
+        this.canSave = true;
+      } else {
+        this.canSave = false;
+      }
+    }
+  }
+
+  blockType(event: any) {
+    const check = event.target.checked;
+    this.blockTypeVal = check;
+
+    if(!this.blockTypeVal) {
+      this.komponentForm.controls['type_1'].enable();
+    } else {
+      this.komponentForm.controls['type_1'].disable();
+    }
+  }
+
+
   checkkey(typ: Types) {
     const tmp = this.checkSortList.findIndex(el => el === typ);
     if (tmp > -1) {
@@ -317,9 +347,14 @@ export class EditComponentComponent implements OnInit, OnDestroy {
         } else {
           this.checkTasma = false;
         }
+        // if ( q > 25) {
+        //   this.checkMaxQuantity = true;
+        //   console.log(q);
+        // } else {
+        //   this.checkMaxQuantity = false;
+        // }
 
-
-        if (val.length > 0 && q > 0 && !this.checkTasma) {
+        if (val.length > 0 && q > 0 && !this.checkTasma && !this.checkMaxQuantity) {
           this.api.addchildToComponent(ktmp._name, val, q).subscribe(w => {
 
             if (null != w['resoult']) {
@@ -339,18 +374,20 @@ export class EditComponentComponent implements OnInit, OnDestroy {
                       name: updatedKomponent._name}
                     ));
                     this.childKomponents.splice(0, this.childKomponents.length);
-                    const a = new Map<string, {element: Komponent, ilosc: number}>();
-                    updatedKomponent._childsElement.forEach(item => {
-                      if (!a.get(item._name)) {
-                        a.set(item._name, { element: item, ilosc: 1});
-                      } else {
-                        a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
-                      }
-                    });
+                    // const a = new Map<string, {element: Komponent, ilosc: number}>();
+                    // updatedKomponent._childsElement.forEach(item => {
+                    //   if (!a.get(item._name)) {
+                    //     a.set(item._name, { element: item, ilosc: 1});
+                    //   } else {
+                    //     a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
+                    //   }
+                    // });
+                    //
+                    // a.forEach((v, k, m) => {
+                    //   this.childKomponents.push(v);
+                    // });
 
-                    a.forEach((v, k, m) => {
-                      this.childKomponents.push(v);
-                    });
+                    this.getChilds(updatedKomponent._name);
                   });
                 }}}});
           }
@@ -382,17 +419,18 @@ export class EditComponentComponent implements OnInit, OnDestroy {
                 }
               ));
               this.childKomponents.splice(0, this.childKomponents.length);
-              const a = new Map<string, {element: Komponent, ilosc: number}>();
-              updatedKomponent._childsElement.forEach(item => {
-                if (!a.get(item._name)) {
-                  a.set(item._name, { element: item, ilosc: 1});
-                } else {
-                  a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
-                }
-              });
-              a.forEach((v, k, m) => {
-                this.childKomponents.push(v);
-              });
+              this.getChilds(updatedKomponent._name);
+              // const a = new Map<string, {element: Komponent, ilosc: number}>();
+              // updatedKomponent._childsElement.forEach(item => {
+              //   if (!a.get(item._name)) {
+              //     a.set(item._name, { element: item, ilosc: 1});
+              //   } else {
+              //     a.set(item._name, {element: item, ilosc: a.get(item._name).ilosc + 1});
+              //   }
+              // });
+              // a.forEach((v, k, m) => {
+              //   this.childKomponents.push(v);
+              // });
             });
           }
         }
@@ -401,6 +439,25 @@ export class EditComponentComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  getChilds(parent: string){
+    if(undefined !== parent){
+      this.api.getKomponentQuantity(parent).subscribe(
+        el => {
+          const q: KomponentQuantity[] = el;
+          const kom = [];
+          q.forEach(el1 => kom.push(el1.komponentName));
+          const wynik = this.komponentsArr.filter(w1 => kom.includes(w1._name));
+          wynik.forEach(w2 => {
+            q.forEach(k2 => {
+              if (k2.komponentName === w2._name){
+                this.childKomponents.push({element: w2, ilosc: k2.quantity});
+              }
+            });
+          });
+        });
+    }
+  }
 
 
   groupElement(k: Komponent) {
@@ -425,3 +482,7 @@ interface NewKomponent {
    _childsElement: NewKomponent[];
 }
 
+interface KomponentQuantity{
+  komponentName: string;
+  quantity: number;
+}

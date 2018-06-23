@@ -188,6 +188,19 @@ export class ApiService {
     });
 
   }
+  getStockRecord(start, end) {
+    return this.httpClient.get<StockRecords[]>(data.GET_RECORDS.url + '/' + start + '/' + end,{
+      observe: 'body',
+      responseType: 'json'}
+    );
+  }
+
+  getKomponentQuantity(parent: string){
+    return this.httpClient.get<KomponentQuantity[]>(data.GET_COMP_QUANTITY.url + '/' + parent, {
+      observe: 'body',
+      responseType: 'json'}
+    );
+  }
 
 
 
@@ -360,7 +373,19 @@ interface UpdateServerList {
   type: string;
 }
 
+interface StockRecords {
+  time: string;
+  warehouseName: string;
+  komponentName: string;
+  oldStock: number;
+  newStock: number;
+  type: string;
+}
 
+interface KomponentQuantity{
+  komponentName: string;
+  quantity: number;
+}
 
 
 

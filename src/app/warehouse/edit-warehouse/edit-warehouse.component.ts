@@ -73,12 +73,13 @@ export class EditWarehouseComponent implements OnInit {
    const tmp = new WarehouseModel('1234', this.warehouseForm.controls['name'].value,
       w['description'], zm);
     tmp._visibleName = '';
-    if ( (w['visible_name'].replace('/\s/g', '')).length > 3 ) {
-      tmp._visibleName = w['visible_name'];
-    }
-
-    if(w['visible_name'].length === 0){
-      tmp._visibleName = w['name'];
+    if(w['visible_name'] !== null){
+      if ( (w['visible_name'].replace('/\s/g', '')).length > 3 ) {
+        tmp._visibleName = w['visible_name'];
+      }
+      if(w['visible_name'].length === 0){
+        tmp._visibleName = w['name'];
+      }
     }
     if (this.warehouseForm.valid) {
       this.nameValid = false;

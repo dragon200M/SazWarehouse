@@ -6,12 +6,7 @@ import * as fromApp from '../../store/app.reducers';
 import {Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import * as $ from 'jquery';
-import 'datatables.net';
 import {ApiService} from '../../services/api.service';
-import {Subject} from 'rxjs/Subject';
-import {DataTableDirective} from 'angular-datatables';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import * as StockActions from './../store/stock.actions';
 
 
@@ -31,15 +26,15 @@ export class OperationComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('fileInput') fileInput: ElementRef;
 
   @ViewChildren('tab', {read: ElementRef}) tds: QueryList<ElementRef>;
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+
 
   tabledataOperation: StockHolder[];
   newStockTable: UpdateList[] = [];
   updateCheck = false;
   updateInfo = false;
   stockCheck: boolean;
-
+  filter = '';
+  term ='';
 
 
   constructor(private store: Store<fromApp.AppState>,
@@ -82,9 +77,11 @@ export class OperationComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stockCheck = false;
     this.tds.forEach( d => {
       const tmp = d.nativeElement.children;
-      let to = parseFloat(tmp[7].children[0].value);
-      let tin = parseFloat(tmp[6].children[0].value);
+      let to = parseFloat(tmp[7].children[0].value.replace(',', '.'));
+      let tin = parseFloat(tmp[6].children[0].value.replace(',', '.'));
       let tst = parseFloat(tmp[5].textContent);
+
+
 
        if (isNaN(to)) {to = 0; }
        if (isNaN(tin)) {tin = 0; }
@@ -155,6 +152,32 @@ export class OperationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  decimalCheck(el, evt) {
+    const charCode = (evt.which) ? evt.which : evt.keyCode;
+    const number = el.value.split(',');
+    const number2 = el.value.split('.');
+    if ((charCode !== 44 && (charCode !== 46) && charCode > 31 && (charCode < 48 || charCode > 57))) {
+      return false;
+    }
+
+    if ((number.length > 1 && charCode === 44) || (number2.length > 1 && charCode === 46)){
+      return false;
+    }
+
+    if(number.length > 1 && charCode === 46) {
+      return false;
+    }
+
+    if(number2.length > 1 && charCode === 44) {
+      return false;
+    }
+
+
+    return true;
+  }
+
+
+
   saveData() {
 
     const updList: UpdateServerList[] = [];
@@ -210,6 +233,8 @@ export class OperationComponent implements OnInit, AfterViewInit, OnDestroy {
 
    });
   }
+
+
 
   key: string = 'name';
   reverse: boolean = false;

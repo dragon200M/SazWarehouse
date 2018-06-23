@@ -2,20 +2,12 @@ import {
   AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, TemplateRef, ViewChild,
   ViewChildren
 } from '@angular/core';
-import * as fromKomponent from '../../component/store/komp.reducers';
-import * as StockAction from '../store/stock.actions';
-import * as fromStock from '../store/stock.reducers';
 import * as fromApp from '../../store/app.reducers';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Komponent} from '../../component/komponent.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import * as $ from 'jquery';
-import 'datatables.net';
 import {ApiService} from '../../services/api.service';
-import {Subject} from 'rxjs/Subject';
-import {DataTableDirective} from 'angular-datatables';
+
 
 @Component({
   selector: 'app-summary',
@@ -25,7 +17,8 @@ import {DataTableDirective} from 'angular-datatables';
 export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata: MainHolder[];
   tabledata2: RollerHolder[];
-
+  term = '';
+  filter = '';
 
 
   constructor(private store: Store<fromApp.AppState>,
